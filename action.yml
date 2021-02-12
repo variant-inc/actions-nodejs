@@ -1,0 +1,12 @@
+
+# action.yml
+name: "Lazy Action Nodejs"
+description: "Github action to perform build, test , scan and generate image."
+
+
+
+runs:
+  using: "docker"
+  image: docker://public.ecr.aws/p4v7w0a5/lazy/dotnet-action:latest
+  env:
+    GITHUB_TOKEN: ${{ inputs.github_token }}
