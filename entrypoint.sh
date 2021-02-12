@@ -17,7 +17,6 @@ export GITHUB_USER="$GITHUB_REPOSITORY_OWNER"
 
 echo "End: Setting Prerequisites"
 
-ls -ltr
 echo "Start: npm install and build."
       npm install
       npm run build --if-present
@@ -28,5 +27,6 @@ echo "Start: test"
 echo "End: npm test."
 
 echo "Start: Sonar Scan"
+cd / && ls -ltr
 sh -c "/scripts/coverage_scan.sh"
 echo "End: Sonar Scan"
