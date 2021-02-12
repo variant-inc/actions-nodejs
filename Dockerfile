@@ -33,7 +33,6 @@ RUN apk add --no-cache \
   rm -rf /var/cache/apk/* &&\
   aws --version
 
-
-COPY entrypoint.sh /entrypoint.sh
-
+COPY . /
+RUN chmod +x -R /scripts/* /*.sh
 ENTRYPOINT ["/entrypoint.sh"]
