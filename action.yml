@@ -14,6 +14,11 @@ inputs:
     description: "sonar scan in docker target"
     required: false
     default: "sonarscan-env"
+  github_token:
+    description: "Github token"
+    required: true
 runs:
   using: "docker"
   image: docker://public.ecr.aws/p4v7w0a5/lazy/nodejs-action:latest
+  env:
+    GITHUB_TOKEN: ${{ inputs.github_token }}

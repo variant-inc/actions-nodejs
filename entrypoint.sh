@@ -27,7 +27,5 @@ echo "Start: test"
 echo "End: npm test."
 
 echo "Start: Sonar Scan"
-echo "Checking files exist"
-cd / && ls -ltr
 sh -c "/scripts/coverage_scan.sh"
 echo "End: Sonar Scan"

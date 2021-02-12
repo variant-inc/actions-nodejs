@@ -33,6 +33,8 @@ RUN apk add --no-cache \
   rm -rf /var/cache/apk/* &&\
   aws --version
 
+RUN npm install -g sonarqube-scanner  
+
 COPY . /
 RUN chmod +x -R /scripts/* /*.sh
 ENTRYPOINT ["/entrypoint.sh"]
