@@ -3,30 +3,32 @@
 
 set -eo
 
-echo "Start: Setting Prerequisites"
-cd "$GITHUB_WORKSPACE"
-echo "Current directory: $(pwd)"
+echo "Hello"
 
-export AWS_WEB_IDENTITY_TOKEN_FILE="/token"
-echo "$AWS_WEB_IDENTITY_TOKEN" >> "$AWS_WEB_IDENTITY_TOKEN_FILE"
+# echo "Start: Setting Prerequisites"
+# cd "$GITHUB_WORKSPACE"
+# echo "Current directory: $(pwd)"
 
-export AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION:=us-east-1}"
+# export AWS_WEB_IDENTITY_TOKEN_FILE="/token"
+# echo "$AWS_WEB_IDENTITY_TOKEN" >> "$AWS_WEB_IDENTITY_TOKEN_FILE"
 
-export BRANCH_NAME="$GITVERSION_BRANCHNAME"
-echo "Print Branch name: $BRANCH_NAME"
+# export AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION:=us-east-1}"
 
-export GITHUB_USER="$GITHUB_REPOSITORY_OWNER"
+# export BRANCH_NAME="$GITVERSION_BRANCHNAME"
+# echo "Print Branch name: $BRANCH_NAME"
 
-echo "End: Setting Prerequisites"
+# export GITHUB_USER="$GITHUB_REPOSITORY_OWNER"
 
-echo "Start: npm install and build."
-      npm install
-      npm run build --if-present
-echo "End: npm install and build."
+# echo "End: Setting Prerequisites"
 
-echo "Start: test"
-      npm run test:coverage
-echo "End: npm install and build."
+# echo "Start: npm install and build."
+#       npm install
+#       npm run build --if-present
+# echo "End: npm install and build."
+
+# echo "Start: test"
+#       npm run test:coverage
+# echo "End: npm install and build."
 
 # echo "Start: Sonar Scan"
 # sh -c "/scripts/coverage_scan.sh"
