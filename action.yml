@@ -2,7 +2,18 @@
 # action.yml
 name: "Lazy Action Nodejs"
 description: "Github action to perform build, test , scan and generate image."
-
+inputs:
+  dockerfile_dir_path:
+    description: "Directory path to the dockerfile"
+    required: true
+  sonar_scan_in_docker:
+    description: "Is sonar scan running as part of Dockerfile"
+    required: false
+    default: "false"
+  sonar_scan_in_docker_target:
+    description: "sonar scan in docker target"
+    required: false
+    default: "sonarscan-env"
 runs:
   using: "docker"
   image: docker://public.ecr.aws/p4v7w0a5/lazy/nodejs-action:latest
