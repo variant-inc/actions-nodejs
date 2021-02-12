@@ -3,8 +3,14 @@
 name: "Lazy Action Nodejs"
 description: "Github action to perform build, test , scan and generate image."
 
-
-
+inputs:
+  who-to-greet:  # id of input
+    description: 'Who to greet'
+    required: true
+    default: 'World'
+outputs:
+  time: # id of output
+    description: 'The time we greeted you'
 runs:
   using: "docker"
   image: docker://public.ecr.aws/p4v7w0a5/lazy/nodejs-action:latest
