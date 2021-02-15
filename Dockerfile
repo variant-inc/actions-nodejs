@@ -33,7 +33,17 @@ RUN apk add --no-cache \
   rm -rf /var/cache/apk/* &&\
   aws --version
 
-RUN npm install -g sonarqube-scanner  
+ENV SONAR_SCANNER_VERSION 4.4.0.2170
+ENV PATH $PATH:/sonar-scanner/bin
+
+ADD "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_SCANNER_VERSION}.zip" /
+
+RUN set -x \
+  && unzip sonar-scanner-cli-${SONAR_SCANNER_VERSION}.zip \
+	&& ln -s /sonar-scanner-${SONAR_SCANNER_VERSION} /sonar-scanner \
+  && rm -f sonar-scanner-cli-*.zip 
+
+# RUN npm install -g sonarqube-scanner
 
 COPY . /
 RUN chmod +x -R /scripts/* /*.sh

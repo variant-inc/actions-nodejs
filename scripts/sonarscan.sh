@@ -15,8 +15,17 @@ sonar_args="-Dsonar.organization=$SONAR_ORGANIZATION \
     -Dsonar.scm.revision=$GITHUB_SHA"
 
 if [ "$PULL_REQUEST_KEY" = null ]; then
-  eval "sonar-scanner $sonar_args -Dsonar.branch.name=$BRANCH_NAME"
+ echo "hello"
+ /sonar-scanner/bin/sonar-scanner -Dsonar.organization="$SONAR_ORGANIZATION" \
+                        -Dsonar.projectKey="$SONAR_PROJECT_KEY" \
+                        -Dsonar.host.url="https://sonarcloud.io" \
+                        -Dsonar.login="$SONAR_TOKEN" \
+                        -Dsonar.scm.disabled=true \
+                        -Dsonar.scm.revision="$GITHUB_SHA" \
+                        -Dsonar.branch.name="$BRANCH_NAME" \
+                        -Dsonar.log.level="DEBUG"
 else
-  eval "sonar-scanner $sonar_args -Dsonar.pullrequest.key=$PULL_REQUEST_KEY"
+  echo "hello1"
+  eval "sonar-scanner  -Dsonar.pullrequest.key=$PULL_REQUEST_KEY"
 fi
 

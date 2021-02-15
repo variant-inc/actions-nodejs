@@ -17,6 +17,13 @@ inputs:
   github_token:
     description: "Github token"
     required: true
+  container_push_enabled:
+    description: "Enable Build and Push Container Image"
+    required: false
+    default: "true"
+  ecr_repository:
+    description: "Ecr repository name"
+    required: true
 runs:
   using: "docker"
   image: docker://public.ecr.aws/p4v7w0a5/lazy/nodejs-action:latest
