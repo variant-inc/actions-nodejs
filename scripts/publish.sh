@@ -18,16 +18,5 @@ trap "cleanup" EXIT
 echo "Connecting to AWS account."
 
 docker login -u AWS -p "$(aws ecr get-login-password)" "$ECR_REGISTRY"
-
-DOCKERFILE_PATH="$INPUT_DOCKERFILE_DIR_PATH"
-
-mkdir -p /publish
-
-if [ -z "$DOCKERFILE_PATH" ]; then
-  echo "Running lazy publish image"
-  DOCKERFILE_PATH=/docker/
-  dotnet publish -c Release -o publish
-fi
-
-eval "docker build $(echo $(env | cut -f1 -d= | sed 's/^/--build-arg /')) -t $IMAGE $DOCKERFILE_PATH"
+eval "docker build -t $IMAGE $INPUT_DOCKERFILE_DIR_PATH $(for i in $(env); do out+="--build-arg $i "; done; echo "$out")"
 docker push "$IMAGE"
