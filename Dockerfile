@@ -1,6 +1,26 @@
 # Container image that runs your code
 FROM node:lts-alpine
 
+
+ARG BUILD_DATE
+ARG BUILD_REVISION
+ARG BUILD_VERSION
+
+LABEL com.github.actions.name="Lazy Action NodeJS" \
+  com.github.actions.description="Build and Push NodeJS Image" \
+  com.github.actions.icon="code" \
+  com.github.actions.color="red" \
+  maintainer="Variant DevOps <devops@drivevariant.com>" \
+  org.opencontainers.image.created=$BUILD_DATE \
+  org.opencontainers.image.revision=$BUILD_REVISION \
+  org.opencontainers.image.version=$BUILD_VERSION \
+  org.opencontainers.image.authors="Variant DevOps <devops@drivevariant.com>" \
+  org.opencontainers.image.url="https://github.com/variant-inc/lazy-action-dotnet" \
+  org.opencontainers.image.source="https://github.com/variant-inc/lazy-action-dotnet" \
+  org.opencontainers.image.documentation="https://github.com/variant-inc/lazy-action-dotnet" \
+  org.opencontainers.image.vendor="AWS ECR" \
+  org.opencontainers.image.description="Build and Push NodeJS Packages"
+
 ARG GLIBC_VER=2.31-r0
 ENV AWS_PAGER=""
 RUN apk add --no-cache \
@@ -35,7 +55,7 @@ RUN apk add --no-cache \
 
 ENV SONAR_SCANNER_VERSION 4.4.0.2170
 ENV PATH $PATH:/sonar-scanner/bin
-COPY "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_SCANNER_VERSION}.zip" /
+ADD "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_SCANNER_VERSION}.zip" /
 RUN set -x \
 	&& apk add --no-cache unzip openjdk11 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community \
   && unzip sonar-scanner-cli-${SONAR_SCANNER_VERSION}.zip \
