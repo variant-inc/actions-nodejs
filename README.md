@@ -46,26 +46,19 @@ Refer [lazy action setup](https://github.com/variant-inc/lazy-action-setup/blob/
 
 ### 3. Add the nodejs action
 
-1. This step is to invoke lazy dotnet action with release version by passing environment variables and input parameters. Input parameters section provides more insight of optional and required parameters.
+1. This step is to invoke lazy nodejs action with release version by passing environment variables and input parameters. Input parameters section provides more insight of optional and required parameters.
 
 ```yaml
 
     - name: Lazy action steps
       id: lazy-action
-      uses: variant-inc/lazy-action-dotnet@v0.1.0
+      uses: variant-inc/lazy-action-nodejs@v0.1.0
       env:
-        NUGET_TOKEN: ${{ secrets.PKG_READ }}
-        AWS_DEFAULT_REGION: us-east-2
-        AWS_REGION: us-east-2
+        AWS_DEFAULT_REGION: us-east-1
         GITHUB_USER: variant-inc
       with:
-        src_file_dir_path: '.'
         dockerfile_dir_path: '.'
         ecr_repository: naveen-demo-app/demo-repo
-        nuget_push_enabled: 'true'
-        sonar_scan_in_docker: 'false'
-        nuget_src_project: "src/Variant.ScheduleAdherence.Client/Variant.ScheduleAdherence.Client.csproj"
-        nuget_package_name: 'demo-app'
         github_token: ${{ secrets.GITHUB_TOKEN }}
 
 ```
@@ -92,7 +85,7 @@ Refer [octopus action](https://github.com/variant-inc/lazy-action-octopus/blob/m
 ## Using Lazy NodeJS Action
 
 You can set up continuous integration for your project using a lazy workflow action.
-After you set up CI, you can customize the workflow to meet your needs. By passing the right input parameters with the lazy dotnet action.
+After you set up CI, you can customize the workflow to meet your needs. By passing the right input parameters with the lazy nodejs action.
 
 ### Adding lazy nodejs action to workflow
 
@@ -114,19 +107,13 @@ jobs:
 
     - name: Lazy action steps
       id: lazy-action
-      uses: variant-inc/lazy-action-dotnet@v1
+      uses: variant-inc/lazy-action-nodejs@v0.1.0
       env:
-        NUGET_TOKEN: ${{ secrets.PKG_READ }}
-        AWS_DEFAULT_REGION: us-east-2
+        AWS_DEFAULT_REGION: us-east-1
         GITHUB_USER: variant-inc
       with:
-        src_file_dir_path: '.'
         dockerfile_dir_path: '.'
         ecr_repository: naveen-demo-app/demo-repo
-        nuget_push_enabled: 'true'
-        sonar_scan_in_docker: 'false'
-        nuget_src_project: "src/Variant.ScheduleAdherence.Client/Variant.ScheduleAdherence.Client.csproj"
-        nuget_package_name: 'demo-app'
         github_token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Lazy Action Octopus
@@ -144,12 +131,10 @@ jobs:
 
 | Parameter                     | Default         | Description                                                                                                                  | Required |
 | ----------------------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------- | -------- |
-| `src_file_dir_path`           | `.`             | Directory path to the solution file                                                                                          | true     |
 | `dockerfile_dir_path`         | `.`             | Directory path to the dockerfile                                                                                             | true     |
+| `npm_test_placeholder`        | `test`          | npm test run placeholder                                                                                                     | true     |
 | `ecr_repository`              |                 | ECR Repository name                                                                                                          | true     |
 | `sonar_scan_in_docker`        | "false"         | Is sonar scan running as part of Dockerfile                                                                                  | false    |
 | `sonar_scan_in_docker_target` | "sonarscan-env" | sonar scan in docker target.                                                                                                 | false    |
-| `nuget_push_enabled`          | "false"         | Enabled Nuget Push to Package Registry.                                                                                      | false    |
-| `nuget_package_name`          |                 | Creates the nuget package with this name. Used only when nuget_push_enabled is true.                                         | false    |
-| `nuget_project_path`           |                 | Path to the Nuget Project File (.csproj). Used only when nuget_push_enabled is true. Required if nuget_push_enabled is true. | false    |
 | `github_token`                |                 | Github Token                                                                                                                 | true     |
+| `container_push_enabled`      |                 | Enable build and push container image                                                                                        | true     |

@@ -1,0 +1,35 @@
+---
+name: CI Pipeline for lazy nodejs image push to ECR
+on:
+  release:
+    types: ["created"]
+
+jobs:
+  build:
+    name: Release Build & Push
+    runs-on: [test]
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Get current date
+        run: echo "BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> ${GITHUB_ENV}
+
+      - name: Login to ECR
+        env:
+          ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+          ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+        run: docker login -u AWS -p $(aws ecr-public get-login-password --region us-east-1) $ECR_REGISTRY
+
+      - name: Build and push
+        env:
+          ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+          ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+        run: |
+          docker build \
+            --build-arg BUILD_DATE \
+            --build-arg BUILD_REVISION=$GITHUB_SHA \
+            --build-arg BUILD_VERSION=$GITHUB_SHA \
+            -t $ECR_REGISTRY/$ECR_REPOSITORY:latest \
+            -t $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.event.release.tag_name }} .
+          docker push -a $ECR_REGISTRY/$ECR_REPOSITORY
