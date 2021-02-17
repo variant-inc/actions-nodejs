@@ -31,19 +31,19 @@ RUN apk add --no-cache \
   glibc-${GLIBC_VER}.apk \
   glibc-bin-${GLIBC_VER}.apk &&\
   rm -rf /var/cache/apk/* &&\
-  aws --version
+  aws --version 
 
 ENV SONAR_SCANNER_VERSION 4.4.0.2170
 ENV PATH $PATH:/sonar-scanner/bin
-
 ADD "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_SCANNER_VERSION}.zip" /
-
 RUN set -x \
+	&& apk add --no-cache unzip openjdk11 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community \
   && unzip sonar-scanner-cli-${SONAR_SCANNER_VERSION}.zip \
-	&& ln -s /sonar-scanner-${SONAR_SCANNER_VERSION} /sonar-scanner \
-  && rm -f sonar-scanner-cli-*.zip 
+  && mv -v /sonar-scanner-${SONAR_SCANNER_VERSION}  /sonar-scanner/  \
+  && ln -s /sonar-scanner/bin/sonar-scanner       /usr/local/bin/     \
+  && ln -s /sonar-scanner/bin/sonar-scanner-debug /usr/local/bin/ \
+  && rm -f sonar-scanner-cli-*.zip
 
-# RUN npm install -g sonarqube-scanner
 
 COPY . /
 RUN chmod +x -R /scripts/* /*.sh

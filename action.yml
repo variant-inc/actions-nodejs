@@ -6,6 +6,10 @@ inputs:
   dockerfile_dir_path:
     description: "Directory path to the dockerfile"
     required: true
+  npm_test_placeholder:
+    description: "npm test run placeholder"
+    required: false
+    default: "test"
   sonar_scan_in_docker:
     description: "Is sonar scan running as part of Dockerfile"
     required: false

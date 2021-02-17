@@ -23,12 +23,12 @@ echo "Start: npm install and build."
 echo "End: npm install and build."
 
 echo "Start: test"
-      npm run test
+      npm run $INPUT_NPM_TEST_PLACEHOLDER
 echo "End: npm test."
 
-# echo "Start: Sonar Scan"
-# sh -c "/scripts/coverage_scan.sh"
-# echo "End: Sonar Scan"
+echo "Start: Sonar Scan"
+sh -c "/scripts/coverage_scan.sh"
+echo "End: Sonar Scan"
 
 echo "Container Push: $INPUT_CONTAINER_PUSH_ENABLED"
 if [ "$INPUT_CONTAINER_PUSH_ENABLED" = 'true' ]; then
