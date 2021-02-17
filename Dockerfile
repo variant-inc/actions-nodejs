@@ -35,7 +35,7 @@ RUN apk add --no-cache \
 
 ENV SONAR_SCANNER_VERSION 4.4.0.2170
 ENV PATH $PATH:/sonar-scanner/bin
-ADD "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_SCANNER_VERSION}.zip" /
+COPY "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_SCANNER_VERSION}.zip" /
 RUN set -x \
 	&& apk add --no-cache unzip openjdk11 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community \
   && unzip sonar-scanner-cli-${SONAR_SCANNER_VERSION}.zip \
