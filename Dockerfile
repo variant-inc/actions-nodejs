@@ -53,10 +53,11 @@ RUN apk add --no-cache \
   rm -rf /var/cache/apk/* &&\
   aws --version 
 
-ENV SONAR_SCANNER_VERSION 4.4.0.2170
+ARG SONAR_SCANNER_VERSION=4.4.0.2170
 ENV PATH $PATH:/sonar-scanner/bin
-ADD "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_SCANNER_VERSION}.zip" /
 RUN set -x \
+  && curl --insecure -o /sonar-scanner-cli-${SONAR_SCANNER_VERSION}.zip \
+    -L https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_SCANNER_VERSION}.zip \
 	&& apk add --no-cache unzip openjdk11 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community \
   && unzip sonar-scanner-cli-${SONAR_SCANNER_VERSION}.zip \
   && mv -v /sonar-scanner-${SONAR_SCANNER_VERSION}  /sonar-scanner/  \
