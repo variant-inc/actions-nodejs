@@ -23,7 +23,7 @@ echo "Start: npm install and build."
 echo "End: npm install and build."
 
 echo "Start: test"
-      npm run $INPUT_NPM_TEST_PLACEHOLDER
+      npm run "$INPUT_NPM_TEST_PLACEHOLDER"
 echo "End: npm test."
 
 echo "Start: Sonar Scan"
