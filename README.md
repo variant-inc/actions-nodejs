@@ -135,7 +135,5 @@ jobs:
 | `dockerfile_dir_path`         | `.`             | Directory path to the dockerfile                                                                                             | true     |
 | `npm_test_placeholder`        | `test`          | npm test run placeholder                                                                                                     | true     |
 | `ecr_repository`              |                 | ECR Repository name                                                                                                          | true     |
-| `sonar_scan_in_docker`        | "false"         | Is sonar scan running as part of Dockerfile                                                                                  | false    |
-| `sonar_scan_in_docker_target` | "sonarscan-env" | sonar scan in docker target.                                                                                                 | false    |
 | `github_token`                |                 | Github Token                                                                                                                 | true     |
 | `container_push_enabled`      |                 | Enable build and push container image                                                                                        | true     |

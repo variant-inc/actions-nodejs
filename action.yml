@@ -10,14 +10,6 @@ inputs:
     description: "npm test run placeholder"
     required: false
     default: "test"
-  sonar_scan_in_docker:
-    description: "Is sonar scan running as part of Dockerfile"
-    required: false
-    default: "false"
-  sonar_scan_in_docker_target:
-    description: "sonar scan in docker target"
-    required: false
-    default: "sonarscan-env"
   github_token:
     description: "Github token"
     required: true
