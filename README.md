@@ -111,6 +111,7 @@ jobs:
       env:
         AWS_DEFAULT_REGION: us-east-1
         GITHUB_USER: variant-inc
+        AWS_REGION: us-east-1
       with:
         dockerfile_dir_path: '.'
         ecr_repository: naveen-demo-app/demo-repo
