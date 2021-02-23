@@ -133,7 +133,7 @@ jobs:
 | Parameter                     | Default         | Description                                                                                                                  | Required |
 | ----------------------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------- | -------- |
 | `dockerfile_dir_path`         | `.`             | Directory path to the dockerfile                                                                                             | true     |
-| `npm_test_placeholder`        | `test`          | npm test run placeholder                                                                                                     | true     |
+| `npm_test_script_name`        | `test`          | npm test script name                                                                                                     | true     |
 | `ecr_repository`              |                 | ECR Repository name                                                                                                          | true     |
 | `github_token`                |                 | Github Token                                                                                                                 | true     |
 | `container_push_enabled`      |                 | Enable build and push container image                                                                                        | true     |

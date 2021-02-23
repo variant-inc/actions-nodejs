@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -eo
+
 echo "Start: Setting Prerequisites"
 cd "$GITHUB_WORKSPACE"
 echo "Current directory: $(pwd)"
@@ -18,12 +19,12 @@ export GITHUB_USER="$GITHUB_REPOSITORY_OWNER"
 echo "End: Setting Prerequisites"
 
 echo "Start: npm install and build."
-      npm install
-      npm run build --if-present
+npm install
+npm run build --if-present
 echo "End: npm install and build."
 
 echo "Start: test"
-      npm run "$INPUT_NPM_TEST_PLACEHOLDER"
+npm run "$INPUT_NPM_TEST_SCRIPT_NAME"
 echo "End: npm test."
 
 echo "Start: Sonar Scan"

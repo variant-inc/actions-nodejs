@@ -6,8 +6,8 @@ inputs:
   dockerfile_dir_path:
     description: "Directory path to the dockerfile"
     required: true
-  npm_test_placeholder:
-    description: "npm test run placeholder"
+  npm_test_script_name:
+    description: "npm test script name"
     required: false
     default: "test"
   github_token:
