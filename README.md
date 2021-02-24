@@ -60,7 +60,6 @@ Refer [lazy action setup](https://github.com/variant-inc/lazy-action-setup/blob/
         dockerfile_dir_path: '.'
         ecr_repository: naveen-demo-app/demo-repo
         github_token: ${{ secrets.GITHUB_TOKEN }}
-
 ```
 
 ### 4. Add octopus action
