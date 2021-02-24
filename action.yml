@@ -1,0 +1,27 @@
+
+# action.yml
+name: "Lazy Action Nodejs"
+description: "Github action to perform build, test , scan and generate image."
+inputs:
+  dockerfile_dir_path:
+    description: "Directory path to the dockerfile"
+    required: true
+  npm_test_script_name:
+    description: "npm test script name"
+    required: false
+    default: "test"
+  github_token:
+    description: "Github token"
+    required: true
+  container_push_enabled:
+    description: "Enable Build and Push Container Image"
+    required: false
+    default: "true"
+  ecr_repository:
+    description: "Ecr repository name"
+    required: true
+runs:
+  using: "docker"
+  image: docker://public.ecr.aws/p4v7w0a5/lazy/nodejs-action:v0.1.0
+  env:
+    GITHUB_TOKEN: ${{ inputs.github_token }}
