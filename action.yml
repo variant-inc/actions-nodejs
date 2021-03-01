@@ -1,5 +1,4 @@
 
-# action.yml
 name: "Lazy Action Nodejs"
 description: "Github action to perform build, test , scan and generate image."
 inputs:
