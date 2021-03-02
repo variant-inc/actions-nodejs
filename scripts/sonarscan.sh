@@ -13,7 +13,6 @@ sonar_args="-Dsonar.organization=$SONAR_ORGANIZATION \
             -Dsonar.login=$SONAR_TOKEN \
             -Dsonar.scm.disabled=true \
             -Dsonar.javascript.lcov.reportPaths=$OUTPUTDIR/lcov.info \
-            -Dsonar.exclusions=test/** \
             -Dsonar.scm.revision=$GITHUB_SHA"
 
 if [ "$PULL_REQUEST_KEY" = null ]; then
