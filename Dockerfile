@@ -71,6 +71,9 @@ RUN apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python
 RUN python3 -m ensurepip
 RUN pip3 install --no-cache --upgrade pip setuptools
 
+# Adding make for prometheus middleware dependency in node applications
+RUN apk add --update --no-cache make=4.2.1-r2
+
 COPY . /
 RUN chmod +x -R /scripts/* /*.sh
 ENTRYPOINT ["/entrypoint.sh"]
