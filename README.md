@@ -1,8 +1,8 @@
-# lazy-action-nodejs
+# Actions Nodejs
 
 Lazy action to setup CI workflow for nodejs applications
 
-- [lazy-action-nodejs](#lazy-action-nodejs)
+- [Actions Nodejs](#actions-nodejs)
   - [Prerequisites](#prerequisites)
     - [1. Setup github action workflow](#1-setup-github-action-workflow)
     - [2. Add lazy action setup](#2-add-lazy-action-setup)
@@ -39,7 +39,7 @@ Lazy action to setup CI workflow for nodejs applications
 
 ```yaml
     - name: Setup
-      uses: variant-inc/lazy-action-setup@v0.1.0
+      uses: variant-inc/actions-setup@v1
 ```
 
 Refer [lazy action setup](https://github.com/variant-inc/lazy-action-setup/blob/master/README.md) for documentation.
@@ -52,7 +52,7 @@ Refer [lazy action setup](https://github.com/variant-inc/lazy-action-setup/blob/
 
     - name: Lazy action steps
       id: lazy-action
-      uses: variant-inc/lazy-action-nodejs@v0.1.0
+      uses: variant-inc/actions-nodejs@v1
       env:
         AWS_DEFAULT_REGION: us-east-1
         GITHUB_USER: variant-inc
@@ -69,7 +69,7 @@ Refer [lazy action setup](https://github.com/variant-inc/lazy-action-setup/blob/
 ```yaml
 
     - name: Lazy Action Octopus
-      uses: variant-inc/lazy-action-octopus@v0.1.0
+      uses: variant-inc/actions-octopus@v1
       with:
         default_branch: ${{ env.MASTER_BRANCH }}
         deploy_scripts_path: deploy
@@ -102,11 +102,11 @@ jobs:
         fetch-depth: 0
 
     - name: Setup
-      uses: variant-inc/lazy-action-setup@v1
+      uses: variant-inc/actions-setup@v1
 
     - name: Lazy action steps
       id: lazy-action
-      uses: variant-inc/lazy-action-nodejs@v0.1.0
+      uses: variant-inc/actions-nodejs@v1
       env:
         AWS_DEFAULT_REGION: us-east-1
         GITHUB_USER: variant-inc
@@ -117,7 +117,7 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Lazy Action Octopus
-      uses: variant-inc/lazy-action-octopus@v1
+      uses: variant-inc/actions-octopus@v1
       with:
         default_branch: ${{ env.MASTER_BRANCH }}
         deploy_scripts_path: deploy
