@@ -31,12 +31,12 @@ echo "Start: Sonar Scan"
 sh -c "/scripts/coverage_scan.sh"
 echo "End: Sonar Scan"
 
-echo "Container Push: $INPUT_CONTAINER_PUSH_ENABLED"
-if [ "$INPUT_CONTAINER_PUSH_ENABLED" = 'true' ]; then
-  echo "Start: Publish Image to ECR"
-  /scripts/publish.sh
-  echo "End: Publish Image to ECR"
-fi
+# echo "Container Push: $INPUT_CONTAINER_PUSH_ENABLED"
+# if [ "$INPUT_CONTAINER_PUSH_ENABLED" = 'true' ]; then
+#   echo "Start: Publish Image to ECR"
+#   /scripts/publish.sh
+#   echo "End: Publish Image to ECR"
+# fi
 
 echo "Start: Clean up"
 sudo git clean -fdx

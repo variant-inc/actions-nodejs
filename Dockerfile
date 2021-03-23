@@ -26,6 +26,7 @@ ENV AWS_PAGER=""
 RUN apk add --no-cache \
   bash \
   sudo \
+  git \
   curl \
   tzdata \
   ca-certificates \
