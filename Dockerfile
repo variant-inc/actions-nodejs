@@ -25,6 +25,7 @@ ARG GLIBC_VER=2.31-r0
 ENV AWS_PAGER=""
 RUN apk add --no-cache \
   bash \
+  sudo \
   curl \
   tzdata \
   ca-certificates \
