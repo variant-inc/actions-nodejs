@@ -21,6 +21,6 @@ inputs:
     required: true
 runs:
   using: "docker"
-  image: docker://public.ecr.aws/p4v7w0a5/lazy/nodejs-action:sha-e13d02013a00ab667278f91b4bf233df1ddfee7a
+  image: docker://public.ecr.aws/p4v7w0a5/lazy/nodejs-action:v0.1.3
   env:
     GITHUB_TOKEN: ${{ inputs.github_token }}
