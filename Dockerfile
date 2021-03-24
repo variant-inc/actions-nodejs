@@ -23,9 +23,12 @@ LABEL com.github.actions.name="Lazy Action NodeJS" \
 
 ARG GLIBC_VER=2.31-r0
 ENV AWS_PAGER=""
+# hadolint ignore=DL3004
+RUN apk add --no-cache \
+    sudo
+
 RUN apk add --no-cache \
   bash \
-  sudo \
   git \
   curl \
   tzdata \
