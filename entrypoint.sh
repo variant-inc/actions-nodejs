@@ -37,3 +37,7 @@ if [ "$INPUT_CONTAINER_PUSH_ENABLED" = 'true' ]; then
   /scripts/publish.sh
   echo "End: Publish Image to ECR"
 fi
+
+echo "Start: Clean up"
+sudo git clean -fdx
+echo "End: Clean up"
