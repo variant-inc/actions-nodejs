@@ -1,15 +1,9 @@
 ---
-#########################
-#########################
-## Deploy Branch Docker Image to ECR ##
-#########################
-#########################
-
 name: Branch nodejs image push to ECR
 on:
   push:
     paths-ignore:
-      - 'action.yml'
+      - "action.yml"
     branches-ignore:
       - master
 jobs:

@@ -18,9 +18,13 @@ export GITHUB_USER="$GITHUB_REPOSITORY_OWNER"
 
 echo "End: Setting Prerequisites"
 
-echo "Start: test"
-npm run "$INPUT_NPM_TEST_SCRIPT_NAME"
-echo "End: npm test."
+echo "Start: yarn install"
+yarn install
+echo "End: yarn install"
+
+echo "Start: yarn test"
+yarn run "$INPUT_NPM_TEST_SCRIPT_NAME"
+echo "End: yarn test"
 
 echo "Start: Sonar Scan"
 sh -c "/scripts/coverage_scan.sh"
