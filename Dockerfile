@@ -66,6 +66,9 @@ RUN set -x \
   && ln -s /sonar-scanner/bin/sonar-scanner-debug /usr/local/bin/ \
   && rm -f sonar-scanner-cli-*.zip
 
+SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
+RUN curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/master/contrib/install.sh | sh -s -- -b /usr/local/bin
+
 # Install python/pip
 ENV PYTHONUNBUFFERED=1
 RUN apk add --update --no-cache python3 \
