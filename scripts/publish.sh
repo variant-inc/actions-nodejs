@@ -18,5 +18,13 @@ trap "cleanup" EXIT
 echo "Connecting to AWS account."
 
 docker login -u AWS -p "$(aws ecr get-login-password)" "$ECR_REGISTRY"
-eval "docker build -t $IMAGE $INPUT_DOCKERFILE_DIR_PATH $(for i in $(env); do out+="--build-arg $i "; done; echo "$out")"
+eval "docker build -t $IMAGE $INPUT_DOCKERFILE_DIR_PATH $(
+  for i in $(env); do out+="--build-arg $i "; done
+  echo "$out"
+)"
+
+echo "Start: Trivy Scan"
+sh -c "/scripts/trivy_scan.sh"
+echo "End: Trivy Scan"
+
 docker push "$IMAGE"

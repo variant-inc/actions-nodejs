@@ -1,7 +1,6 @@
 # Container image that runs your code
 FROM node:lts-alpine
 
-
 ARG BUILD_DATE
 ARG BUILD_REVISION
 ARG BUILD_VERSION
@@ -15,9 +14,9 @@ LABEL com.github.actions.name="Lazy Action NodeJS" \
   org.opencontainers.image.revision=$BUILD_REVISION \
   org.opencontainers.image.version=$BUILD_VERSION \
   org.opencontainers.image.authors="Variant DevOps <devops@drivevariant.com>" \
-  org.opencontainers.image.url="https://github.com/variant-inc/lazy-action-dotnet" \
-  org.opencontainers.image.source="https://github.com/variant-inc/lazy-action-dotnet" \
-  org.opencontainers.image.documentation="https://github.com/variant-inc/lazy-action-dotnet" \
+  org.opencontainers.image.url="https://github.com/variant-inc/actions-nodejs" \
+  org.opencontainers.image.source="https://github.com/variant-inc/actions-nodejs" \
+  org.opencontainers.image.documentation="https://github.com/variant-inc/actions-nodejs" \
   org.opencontainers.image.vendor="AWS ECR" \
   org.opencontainers.image.description="Build and Push NodeJS Packages"
 
@@ -53,14 +52,14 @@ RUN apk add --no-cache \
   glibc-${GLIBC_VER}.apk \
   glibc-bin-${GLIBC_VER}.apk &&\
   rm -rf /var/cache/apk/* &&\
-  aws --version 
+  aws --version
 
 ARG SONAR_SCANNER_VERSION=4.4.0.2170
 ENV PATH $PATH:/sonar-scanner/bin
 RUN set -x \
   && curl --insecure -o /sonar-scanner-cli-${SONAR_SCANNER_VERSION}.zip \
     -L https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_SCANNER_VERSION}.zip \
-	&& apk add --no-cache unzip openjdk11 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community \
+  && apk add --no-cache unzip openjdk11 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community \
   && unzip sonar-scanner-cli-${SONAR_SCANNER_VERSION}.zip \
   && mv -v /sonar-scanner-${SONAR_SCANNER_VERSION}  /sonar-scanner/  \
   && ln -s /sonar-scanner/bin/sonar-scanner       /usr/local/bin/     \
@@ -69,9 +68,10 @@ RUN set -x \
 
 # Install python/pip
 ENV PYTHONUNBUFFERED=1
-RUN apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python
-RUN python3 -m ensurepip
-RUN pip3 install --no-cache --upgrade pip --no-cache-dir setuptools
+RUN apk add --update --no-cache python3 \
+  && ln -sf python3 /usr/bin/python &&\
+  python3 -m ensurepip &&\
+  pip3 install --no-cache --upgrade pip --no-cache-dir setuptools
 
 # Adding make for prometheus middleware dependency in node applications
 RUN apk add --update --no-cache make gcc g++

@@ -18,11 +18,6 @@ export GITHUB_USER="$GITHUB_REPOSITORY_OWNER"
 
 echo "End: Setting Prerequisites"
 
-echo "Start: npm install and build."
-npm install
-npm run build --if-present
-echo "End: npm install and build."
-
 echo "Start: test"
 npm run "$INPUT_NPM_TEST_SCRIPT_NAME"
 echo "End: npm test."

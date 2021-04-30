@@ -1,4 +1,3 @@
-
 name: "Lazy Action Nodejs"
 description: "Github action to perform build, test , scan and generate image."
 inputs:
@@ -11,7 +10,8 @@ inputs:
     default: "test"
   github_token:
     description: "Github token"
-    required: true
+    required: false
+    default: "dummy-token"
   container_push_enabled:
     description: "Enable Build and Push Container Image"
     required: false
@@ -21,6 +21,6 @@ inputs:
     required: true
 runs:
   using: "docker"
-  image: docker://public.ecr.aws/p4v7w0a5/lazy/nodejs-action:v0.1.3
+  image: docker://public.ecr.aws/p4v7w0a5/lazy/nodejs-action:sha-8e910d68af91b03ec82bd4361b0e2f4dc8b94de8
   env:
     GITHUB_TOKEN: ${{ inputs.github_token }}
