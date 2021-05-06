@@ -11,11 +11,13 @@ on:
 jobs:
   lint:
     name: Lint Code Base
-    runs-on: ubuntu-latest
+    runs-on: [test]
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: Lint Code Base
         uses: github/super-linter@v3
