@@ -1,5 +1,11 @@
 #!/bin/bash
 
+function finish {
+  sudo chown -R github:github "$GITHUB_WORKSPACE"/*
+  sudo git clean -fdx
+}
+trap finish EXIT
+
 set -eo
 
 echo "Start: Setting Prerequisites"
