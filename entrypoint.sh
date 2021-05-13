@@ -1,8 +1,10 @@
 #!/bin/bash
 
 function finish {
+  set -x
   sudo chown -R 1000:1000 "$GITHUB_WORKSPACE"/*
   sudo git clean -fdx
+  set +x
 }
 trap finish EXIT
 
