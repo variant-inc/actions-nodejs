@@ -6,7 +6,9 @@ function finish {
   sudo git clean -fdx
   set +x
 }
-trap finish EXIT
+trap finish EXIT SIGTERM
+
+setfacl -d -Rm u:1000:rwx "$GITHUB_WORKSPACE"
 
 set -eo
 

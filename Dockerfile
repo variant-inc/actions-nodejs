@@ -80,5 +80,6 @@ RUN apk add --update --no-cache python3 \
 RUN apk add --update --no-cache make gcc g++
 
 COPY . /
+STOPSIGNAL SIGTERM
 RUN chmod +x -R /scripts/* /*.sh
 ENTRYPOINT ["/entrypoint.sh"]
