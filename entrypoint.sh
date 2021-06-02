@@ -6,7 +6,7 @@ function finish {
   sudo git clean -fdx
   set +x
 }
-trap finish EXIT SIGTERM
+trap finish EXIT
 
 setfacl -d -Rm u:1000:rwx "$GITHUB_WORKSPACE"
 
@@ -30,6 +30,7 @@ echo "End: Setting Prerequisites"
 
 echo "Start: yarn install"
 yarn install
+sudo chown -R 1000:1000 "$GITHUB_WORKSPACE"/*
 echo "End: yarn install"
 
 echo "Start: yarn test"
