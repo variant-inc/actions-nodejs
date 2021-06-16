@@ -16,6 +16,9 @@ echo "Start: Setting Prerequisites"
 cd "$GITHUB_WORKSPACE"
 echo "Current directory: $(pwd)"
 
+echo "Cloning into actions-collection..."
+git clone -b v1 https://github.com/variant-inc/actions-collection.git ./actions-collection
+
 export AWS_WEB_IDENTITY_TOKEN_FILE="/token"
 echo "$AWS_WEB_IDENTITY_TOKEN" >> "$AWS_WEB_IDENTITY_TOKEN_FILE"
 
@@ -40,6 +43,10 @@ echo "End: yarn test"
 echo "Start: Sonar Scan"
 sh -c "/scripts/coverage_scan.sh"
 echo "End: Sonar Scan"
+
+echo "Start: Checking ECR Repo"
+ecr_create "$INPUT_ECR_REPOSITORY"
+echo "End: Checking ECR Repo"
 
 echo "Container Push: $INPUT_CONTAINER_PUSH_ENABLED"
 if [ "$INPUT_CONTAINER_PUSH_ENABLED" = 'true' ]; then
