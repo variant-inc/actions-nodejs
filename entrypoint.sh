@@ -18,6 +18,8 @@ echo "Current directory: $(pwd)"
 
 echo "Cloning into actions-collection..."
 git clone -b v1 https://github.com/variant-inc/actions-collection.git ./actions-collection
+# shellcheck disable=SC1091
+source ./actions-collection/collections.sh
 
 export AWS_WEB_IDENTITY_TOKEN_FILE="/token"
 echo "$AWS_WEB_IDENTITY_TOKEN" >> "$AWS_WEB_IDENTITY_TOKEN_FILE"
