@@ -17,9 +17,7 @@ cd "$GITHUB_WORKSPACE"
 echo "Current directory: $(pwd)"
 
 echo "Cloning into actions-collection..."
-git clone -b v1 https://github.com/variant-inc/actions-collection.git ./actions-collection
-# shellcheck disable=SC1091
-source ./actions-collection/collections.sh
+git clone -b feature/CLOUD-450-ecr-create-script https://github.com/variant-inc/actions-collection.git ./actions-collection
 
 export AWS_WEB_IDENTITY_TOKEN_FILE="/token"
 echo "$AWS_WEB_IDENTITY_TOKEN" >> "$AWS_WEB_IDENTITY_TOKEN_FILE"
@@ -47,13 +45,13 @@ sh -c "/scripts/coverage_scan.sh"
 echo "End: Sonar Scan"
 
 echo "Start: Checking ECR Repo"
-ecr_create "$INPUT_ECR_REPOSITORY"
+./actions-collection/scripts/ecr_create.sh "$INPUT_ECR_REPOSITORY"
 echo "End: Checking ECR Repo"
 
 echo "Container Push: $INPUT_CONTAINER_PUSH_ENABLED"
 if [ "$INPUT_CONTAINER_PUSH_ENABLED" = 'true' ]; then
   echo "Start: Publish Image to ECR"
-  /scripts/publish.sh
+  ./actions-collection/scripts/publish.sh
   echo "End: Publish Image to ECR"
 fi
 
