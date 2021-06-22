@@ -17,7 +17,7 @@ cd "$GITHUB_WORKSPACE"
 echo "Current directory: $(pwd)"
 
 echo "Cloning into actions-collection..."
-git clone -b feature/CLOUD-450-ecr-create-script https://github.com/variant-inc/actions-collection.git ./actions-collection
+git clone -b v1 https://github.com/variant-inc/actions-collection.git ./actions-collection
 
 export AWS_WEB_IDENTITY_TOKEN_FILE="/token"
 echo "$AWS_WEB_IDENTITY_TOKEN" >> "$AWS_WEB_IDENTITY_TOKEN_FILE"
