@@ -3,7 +3,7 @@ description: "Github action to perform build, test , scan and generate image."
 inputs:
   dockerfile_dir_path:
     description: "Directory path to the dockerfile"
-    required: true
+    required: false
   npm_test_script_name:
     description: "npm test script name"
     required: false
@@ -18,9 +18,9 @@ inputs:
     default: "true"
   ecr_repository:
     description: "Ecr repository name"
-    required: true
+    required: false
 runs:
   using: "docker"
-  image: docker://public.ecr.aws/p4v7w0a5/lazy/nodejs-action:v1.1.3
+  image: docker://public.ecr.aws/p4v7w0a5/lazy/nodejs-action:v1.1.4
   env:
     GITHUB_TOKEN: ${{ inputs.github_token }}
