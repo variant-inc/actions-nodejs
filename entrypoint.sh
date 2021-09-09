@@ -36,9 +36,9 @@ yarn install
 sudo chown -R 1000:1000 "$GITHUB_WORKSPACE"/*
 echo "End: yarn install"
 
-echo "Start: yarn test"
-yarn run "$INPUT_NPM_TEST_SCRIPT_NAME"
-echo "End: yarn test"
+# echo "Start: yarn test"
+# yarn run "$INPUT_NPM_TEST_SCRIPT_NAME"
+# echo "End: yarn test"
 
 echo "Start: Sonar Scan"
 sh -c "/scripts/coverage_scan.sh"
