@@ -48,19 +48,29 @@ Refer [lazy action setup](https://github.com/variant-inc/lazy-action-setup/blob/
 
 1. This step is to invoke lazy nodejs action with release version by passing environment variables and input parameters. Input parameters section provides more insight of optional and required parameters.
 
-```yaml
+    ```yaml
 
-    - name: Lazy action steps
-      id: lazy-action
-      uses: variant-inc/actions-nodejs@v1
-      env:
-        AWS_DEFAULT_REGION: us-east-1
-        GITHUB_USER: variant-inc
-      with:
-        dockerfile_dir_path: '.'
-        ecr_repository: naveen-demo-app/demo-repo
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-```
+        - name: Lazy action steps
+          id: lazy-action
+          uses: variant-inc/actions-nodejs@v1
+          env:
+            AWS_DEFAULT_REGION: us-east-1
+            GITHUB_USER: variant-inc
+          with:
+            dockerfile_dir_path: '.'
+            ecr_repository: naveen-demo-app/demo-repo
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+    ```
+2. (Optionally) Add Script to run before running workflow.
+  
+   In `.github/actions`, add a file called `pre_test.sh` that includes commands required for testing your codebase. You will need to you a package manager supported by Alpine Linux
+
+   Example:
+    ```bash
+    apk add --no-cache \
+      git \
+      curl 
+    ```
 
 ### 4. Add octopus action
 
