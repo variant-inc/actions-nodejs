@@ -19,8 +19,15 @@ inputs:
   ecr_repository:
     description: "Ecr repository name"
     required: false
+  sonar_project_key:
+    description: "When using a monorepo, you may need to specify the project key"
+    required: false
+  sonar_project_base_dir:
+    description: "When using a monorepo, you may need to specify the base directory for your project"
+    required: false
+    default: './'
 runs:
   using: "docker"
-  image: docker://public.ecr.aws/p4v7w0a5/lazy/nodejs-action:v1.1.5
+  image: "docker://public.ecr.aws/p4v7w0a5/lazy/nodejs-action:v1.1.6"
   env:
     GITHUB_TOKEN: ${{ inputs.github_token }}
