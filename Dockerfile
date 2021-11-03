@@ -56,7 +56,8 @@ RUN apk add --no-cache \
   rm -rf /var/cache/apk/* &&\
   aws --version
 
-ARG SONAR_SCANNER_VERSION=4.4.0.2170
+ARG SONAR_SCANNER_VERSION=4.6.2.2472
+RUN echo "${SONAR_SCANNER_VERSION} version of sonar-scanner"
 ENV PATH $PATH:/sonar-scanner/bin
 RUN set -x \
   && curl --insecure -o /sonar-scanner-cli-${SONAR_SCANNER_VERSION}.zip \

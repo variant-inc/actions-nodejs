@@ -146,3 +146,5 @@ jobs:
 | `ecr_repository`              |                 | ECR Repository name                                                                                                          | true     |
 | `github_token`                |                 | Github Token                                                                                                                 | true     |
 | `container_push_enabled`      |                 | Enable build and push container image                                                                                        | true     |
+| `sonar_project_key`           | ENV             | Set a project key (useful for monorepos)             | false |
+| `sonar_project_base_dir`      | `./`            | Set a project base dir (useful for monorepos)        | false |
