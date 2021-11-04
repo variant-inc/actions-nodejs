@@ -25,7 +25,7 @@ inputs:
   sonar_project_base_dir:
     description: "When using a monorepo, you may need to specify the base directory for your project"
     required: false
-    default: './'
+    default: "."
 runs:
   using: "docker"
   image: "docker://public.ecr.aws/p4v7w0a5/lazy/nodejs-action:v1.1.6"
