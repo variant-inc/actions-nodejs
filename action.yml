@@ -28,6 +28,6 @@ inputs:
     default: "."
 runs:
   using: "docker"
-  image: "docker://public.ecr.aws/p4v7w0a5/lazy/nodejs-action:v1.1.6"
+  image: "docker://public.ecr.aws/p4v7w0a5/lazy/nodejs-action:sha-789d8800b213d629a3355175e342b80975bd51c7"
   env:
     GITHUB_TOKEN: ${{ inputs.github_token }}
