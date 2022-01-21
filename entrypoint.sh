@@ -41,7 +41,7 @@ sudo chown -R 1000:1000 "$GITHUB_WORKSPACE"/*
 echo "End: yarn install"
 
 echo "Start: Enable sonar"
-  ./actions-collection/scripts/enable_sonar.sh
+pwsh ./actions-collection/scripts/enable_sonar.ps1
 echo "End: Enable sonar"
 
 echo "Start: yarn test"
