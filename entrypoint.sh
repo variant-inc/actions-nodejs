@@ -17,7 +17,7 @@ cd "$GITHUB_WORKSPACE"
 echo "Current directory: $(pwd)"
 
 echo "Cloning into actions-collection..."
-git clone -b v1 https://github.com/variant-inc/actions-collection.git ./actions-collection
+git clone -b feature/CLOUD-1389-sonar-project-and-scan https://github.com/variant-inc/actions-collection.git ./actions-collection
 
 echo "---Start: Pretest script"
 chmod +x ./actions-collection/scripts/pre_test.sh
@@ -39,6 +39,10 @@ echo "Start: yarn install"
 yarn install
 sudo chown -R 1000:1000 "$GITHUB_WORKSPACE"/*
 echo "End: yarn install"
+
+echo "Start: Enable sonar"
+  ./actions-collection/scripts/enable_sonar.sh
+echo "End: Enable sonar"
 
 echo "Start: yarn test"
 yarn run "$INPUT_NPM_TEST_SCRIPT_NAME"
