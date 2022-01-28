@@ -10,7 +10,7 @@ inputs:
     default: "test"
   github_token:
     description: "Github token"
-    required: false
+    required: true
     default: "dummy-token"
   container_push_enabled:
     description: "Enable Build and Push Container Image"
