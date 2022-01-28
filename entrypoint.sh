@@ -40,6 +40,10 @@ yarn install
 sudo chown -R 1000:1000 "$GITHUB_WORKSPACE"/*
 echo "End: yarn install"
 
+echo "Start: Enable sonar"
+pwsh ./actions-collection/scripts/enable_sonar.ps1
+echo "End: Enable sonar"
+
 echo "Start: yarn test"
 yarn run "$INPUT_NPM_TEST_SCRIPT_NAME"
 echo "End: yarn test"

@@ -33,6 +33,15 @@ RUN apk add --no-cache \
   ca-certificates \
   docker-cli \
   openjdk11 \
+  ncurses-terminfo-base \
+	krb5-libs \
+	libgcc \
+	libintl \
+	libssl1.1 \
+	libstdc++ \
+	userspace-rcu \
+	zlib \
+	icu-libs \
   jq \
   binutils &&\
   rm -rf /var/lib/apt/lists/* &&\
@@ -81,6 +90,11 @@ RUN apk add --update --no-cache python3 \
 
 # Adding make for prometheus middleware dependency in node applications
 RUN apk add --update --no-cache make gcc g++
+
+#Download powershell
+RUN curl -L https://github.com/PowerShell/PowerShell/releases/download/v7.2.0/powershell-7.2.0-linux-alpine-x64.tar.gz -o /tmp/powershell.tar.gz \
+  && mkdir -p /opt/microsoft/powershell/7 && tar zxf /tmp/powershell.tar.gz -C /opt/microsoft/powershell/7 \
+  && chmod +x /opt/microsoft/powershell/7/pwsh && ln -s /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh
 
 COPY . /
 RUN chmod +x -R /scripts/* /*.sh
