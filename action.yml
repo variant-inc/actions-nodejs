@@ -11,7 +11,6 @@ inputs:
   github_token:
     description: "Github token"
     required: true
-    default: "dummy-token"
   container_push_enabled:
     description: "Enable Build and Push Container Image"
     required: false
@@ -28,6 +27,6 @@ inputs:
     default: "."
 runs:
   using: "docker"
-  image: "docker://public.ecr.aws/p4v7w0a5/lazy/nodejs-action:test-latest"
+  image: "docker://public.ecr.aws/p4v7w0a5/lazy/nodejs-action:v1.2.0"
   env:
     GITHUB_TOKEN: ${{ inputs.github_token }}
