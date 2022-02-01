@@ -9,6 +9,11 @@ if [ -n "$INPUT_SONAR_PROJECT_KEY" ]; then
   SONAR_PROJECT_KEY="$INPUT_SONAR_PROJECT_KEY"
 fi
 
+wait_flag="false"
+if [ "$BRANCH_NAME" == "master" ] || [ "$BRANCH_NAME" == "main" ]; then
+  wait_flag="true"
+fi
+
 sonar_args="-Dsonar.organization=$SONAR_ORGANIZATION \
             -Dsonar.projectKey=$SONAR_PROJECT_KEY \
             -Dsonar.projectBaseDir=$INPUT_SONAR_PROJECT_BASE_DIR \
@@ -16,7 +21,8 @@ sonar_args="-Dsonar.organization=$SONAR_ORGANIZATION \
             -Dsonar.login=$SONAR_TOKEN \
             -Dsonar.scm.disabled=true \
             -Dsonar.scm.revision=$GITHUB_SHA \
-            -Dsonar.javascript.lcov.reportPaths=$INPUT_SONAR_PROJECT_BASE_DIR/coverage/lcov.info"
+            -Dsonar.javascript.lcov.reportPaths=$INPUT_SONAR_PROJECT_BASE_DIR/coverage/lcov.info \
+            -Dsonar.qualitygate.wait=$wait_flag"
 
 if [ "$PULL_REQUEST_KEY" = null ]; then
   echo "Sonar run when pull request key is null."
