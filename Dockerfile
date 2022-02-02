@@ -34,9 +34,6 @@ RUN apk add --no-cache \
   docker-cli \
   openjdk11 \
   ncurses-terminfo-base \
-  apt-transport-https \
-  gnupg \
-  lsb-release \
 	krb5-libs \
 	libgcc \
 	libintl \
@@ -82,10 +79,7 @@ RUN set -x \
   && rm -f sonar-scanner-cli-*.zip
 
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
-RUN wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | apt-key add - &&\
-  echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | tee -a /etc/apt/sources.list.d/trivy.list &&\
-  apt-get update &&\
-  apt-get install trivy
+RUN curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/master/contrib/install.sh | sh -s -- -b /usr/local/bin
 
 # Install python/pip
 ENV PYTHONUNBUFFERED=1
