@@ -30,7 +30,7 @@ jobs:
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
           ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
         run: |
-          docker buildx build \
+          docker build \
             --build-arg BUILD_DATE \
             --build-arg BUILD_REVISION=$GITHUB_SHA \
             --build-arg BUILD_VERSION=$GITHUB_SHA \
