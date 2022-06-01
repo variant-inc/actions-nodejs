@@ -44,9 +44,9 @@ echo "Start: Enable sonar"
 pwsh ./actions-collection/scripts/enable_sonar.ps1
 echo "End: Enable sonar"
 
-echo "Start: yarn test"
-yarn run "$INPUT_NPM_TEST_SCRIPT_NAME"
-echo "End: yarn test"
+# echo "Start: yarn test"
+# yarn run "$INPUT_NPM_TEST_SCRIPT_NAME"
+# echo "End: yarn test"
 
 echo "Start: Sonar Scan"
 sh -c "/scripts/coverage_scan.sh"
