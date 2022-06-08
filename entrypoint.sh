@@ -48,9 +48,18 @@ echo "Start: yarn test"
 yarn run "$INPUT_NPM_TEST_SCRIPT_NAME"
 echo "End: yarn test"
 
-echo "Start: Sonar Scan"
-sh -c "/scripts/coverage_scan.sh"
-echo "End: Sonar Scan"
+echo "Start: Check sonar run"
+skip_sonar_run=$(pwsh ./actions-collection/scripts/skip_sonar_run.ps1)
+echo "Skip sonar run: $skip_sonar_run"
+echo "End: Check sonar run"
+
+if [ "$skip_sonar_run" != 'True' ]; then
+  echo "Start: Sonar Scan"
+  sh -c "/scripts/coverage_scan.sh"
+  echo "End: Sonar Scan"
+else
+  echo "End: Skipping sonar run"
+fi
 
 echo "Container Push: $INPUT_CONTAINER_PUSH_ENABLED"
 if [ "$INPUT_CONTAINER_PUSH_ENABLED" = 'true' ]; then
