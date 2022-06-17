@@ -28,6 +28,7 @@ RUN apk add --no-cache \
   bash \
   sudo \
   git \
+  acl \
   curl \
   tzdata \
   ca-certificates \
