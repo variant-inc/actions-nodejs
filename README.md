@@ -63,7 +63,7 @@ Refer [lazy action setup](https://github.com/variant-inc/lazy-action-setup/blob/
     ```
 
 2. (Optionally) Add Script to run before running workflow.
-  
+
    In `.github/actions`, add a file called `pre_test.sh` that includes commands required for testing your codebase. You will need to you a package manager supported by Alpine Linux
 
    Example:
