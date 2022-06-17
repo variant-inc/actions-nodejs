@@ -61,6 +61,7 @@ Refer [lazy action setup](https://github.com/variant-inc/lazy-action-setup/blob/
             ecr_repository: naveen-demo-app/demo-repo
             github_token: ${{ secrets.GITHUB_TOKEN }}
     ```
+
 2. (Optionally) Add Script to run before running workflow.
   
    In `.github/actions`, add a file called `pre_test.sh` that includes commands required for testing your codebase. You will need to you a package manager supported by Alpine Linux
