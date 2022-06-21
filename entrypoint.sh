@@ -3,7 +3,7 @@
 function finish {
   set -x
   sudo chown -R 1000:1000 "$GITHUB_WORKSPACE"/*
-  sudo git clean -fdx
+  git clean -fdx
   set +x
 }
 trap finish EXIT
@@ -15,6 +15,8 @@ set -eo
 echo "Start: Setting Prerequisites"
 cd "$GITHUB_WORKSPACE"
 echo "Current directory: $(pwd)"
+
+git config --global --add safe.directory /github/workspace
 
 echo "Cloning into actions-collection..."
 git clone -b v1 https://github.com/variant-inc/actions-collection.git ./actions-collection
@@ -70,7 +72,3 @@ if [ "$INPUT_CONTAINER_PUSH_ENABLED" = 'true' ]; then
   ./actions-collection/scripts/publish.sh
   echo "End: Publish Image to ECR"
 fi
-
-echo "Start: Clean up"
-sudo git clean -fdx
-echo "End: Clean up"
