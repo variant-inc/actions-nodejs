@@ -63,6 +63,7 @@ else
   echo "End: Skipping sonar run"
 fi
 
+
 echo "Container Push: $INPUT_CONTAINER_PUSH_ENABLED"
 if [ "$INPUT_CONTAINER_PUSH_ENABLED" = 'true' ]; then
   echo "Start: Checking ECR Repo"
