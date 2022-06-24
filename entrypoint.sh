@@ -19,7 +19,7 @@ echo "Current directory: $(pwd)"
 git config --global --add safe.directory /github/workspace
 
 echo "Cloning into actions-collection..."
-git clone -b f/CLOUD-1740-skip-image-push https://github.com/variant-inc/actions-collection.git ./actions-collection
+git clone -b v1 https://github.com/variant-inc/actions-collection.git ./actions-collection
 
 echo "---Start: Pretest script"
 chmod +x ./actions-collection/scripts/pre_test.sh
@@ -46,9 +46,9 @@ echo "Start: Enable sonar"
 pwsh ./actions-collection/scripts/enable_sonar.ps1
 echo "End: Enable sonar"
 
-# echo "Start: yarn test"
-# yarn run "$INPUT_NPM_TEST_SCRIPT_NAME"
-# echo "End: yarn test"
+echo "Start: yarn test"
+yarn run "$INPUT_NPM_TEST_SCRIPT_NAME"
+echo "End: yarn test"
 
 echo "Start: Check sonar run"
 skip_sonar_run=$(pwsh ./actions-collection/scripts/skip_sonar_run.ps1)
@@ -62,7 +62,6 @@ if [ "$skip_sonar_run" != 'True' ]; then
 else
   echo "End: Skipping sonar run"
 fi
-
 
 echo "Container Push: $INPUT_CONTAINER_PUSH_ENABLED"
 if [ "$INPUT_CONTAINER_PUSH_ENABLED" = 'true' ]; then
