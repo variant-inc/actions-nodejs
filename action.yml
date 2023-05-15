@@ -39,6 +39,11 @@ inputs:
   ecr_repository:
     description: Ecr repository name
     required: true
+  aws_region:
+    description: >
+      Region where the image will be created.
+    default: us-east-2
+    required: false
   nodejs-version:
     description: >
       The nodejs-version input is optional.
@@ -54,6 +59,9 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Setup Actions
+      uses: variant-inc/actions-setup@v2
+
     - name: Sonar Setup
       id: sonar-setup
       uses: variant-inc/actions-collection/sonar-setup@v2
@@ -74,7 +82,7 @@ runs:
 
     - name: Build and Push Image
       uses: variant-inc/actions-collection/build-push-image@v2
-      if: ${{ inputs.container_push_enabled == 'true' }}
+      if: ${{ inputs.ecr_repository != '' }}
       with:
         dockerfile_dir_path: ${{ inputs.dockerfile_dir_path }}
         ecr_repository: ${{ inputs.ecr_repository }}

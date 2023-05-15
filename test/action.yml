@@ -26,7 +26,7 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Find Python Packager
+    - name: Find Nodejs Packager
       id: packager
       shell: bash
       run: |
@@ -69,7 +69,7 @@ runs:
     - name: Run Test
       shell: bash
       run: |
-        echo "::group::Test with yarn"
+        echo "::group::Run Test"
         if [ -f "yarn.lock" ]; then
             yarn run ${{ inputs.npm_test_script_name }}
         fi
@@ -78,12 +78,6 @@ runs:
         fi
         echo "::endgroup::"
 
-    - name: Collect Coverage Results
-      shell: bash
-      run: |
-        echo "::group::Collect Coverage Results"
-        coverage xml -i -o coverage.xml
-        echo "::endgroup::"
     - name: SonarCloud Scan
       uses: sonarsource/sonarcloud-github-action@master
       with:
@@ -91,4 +85,4 @@ runs:
           -Dsonar.qualitygate.wait=${{ steps.sonar-setup.outputs.wait_flag }}
           -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }}
           -Dsonar.organization=${{ env.SONAR_ORG }}
-          -Dsonar.python.coverage.reportPaths=coverage.xml
+          -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
