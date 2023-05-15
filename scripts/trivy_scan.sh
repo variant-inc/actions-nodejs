@@ -26,10 +26,10 @@ exit_status=0
 cd trivy && aws --profile ops s3 cp s3://"${S3_BUCKET_NAME}"/"${PATH_TO_FOLDER}"/.trivyignore . || exit_status=$?
 echo "$exit_status"
 if [ "$exit_status" -ne 0 ]; then
-  echo "No repo files found, exit status: $exit_status"
+    echo "No repo files found, exit status: $exit_status"
 else
-  echo "Repo file found"
-  cd "$GITHUB_WORKSPACE" && cat trivy/.trivyignore >>.trivyignore
+    echo "Repo file found"
+    cd "$GITHUB_WORKSPACE" && cat trivy/.trivyignore >>.trivyignore
 fi
 
 echo "Printing trivy ignore file"

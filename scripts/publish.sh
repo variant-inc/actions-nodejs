@@ -7,10 +7,10 @@ ECR_REGISTRY="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com"
 IMAGE="$ECR_REGISTRY/$INPUT_ECR_REPOSITORY:$IMAGE_VERSION"
 
 cleanup() {
-  set +e
-  rm -rf publish
-  docker logout "$ECR_REGISTRY"
-  docker image rm "$IMAGE"
+    set +e
+    rm -rf publish
+    docker logout "$ECR_REGISTRY"
+    docker image rm "$IMAGE"
 }
 
 trap "cleanup" EXIT
