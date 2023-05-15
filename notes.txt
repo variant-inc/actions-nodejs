@@ -1,0 +1,2 @@
+Is it possible to use the package.json file as the default? I didn't see a node version in fact-web-app
+Looks like its a different input for a file so either add functionality for using a file or remove it from the description

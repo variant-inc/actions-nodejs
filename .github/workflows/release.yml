@@ -1,0 +1,42 @@
+---
+# yamllint disable rule:line-length
+name: Release
+
+on:  # yamllint disable-line rule:truthy
+  push:
+    branches:
+      - master
+      - main
+
+jobs:
+  Release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Create Tag
+        uses: actions/github-script@v5
+        with:
+          script: |
+            # MajorMinorPatch
+            github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: `refs/tags/v${process.env.GITVERSION_MAJORMINORPATCH}`,
+              sha: context.sha
+            })
+            # MajorMinor
+            github.rest.git.updateRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: `refs/tags/v${process.env.GITVERSION_MAJOR}.${process.env.GITVERSION_MINOR}`,
+              sha: context.sha,
+              force: true
+            })
+            # Major
+            github.rest.git.updateRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: `refs/tags/v${process.env.GITVERSION_MAJOR}`,
+              sha: context.sha,
+              force: true
+            })

@@ -1,0 +1,94 @@
+---
+name: Test Nodejs
+description: |
+  Github Action to Build & Test Nodejs
+
+  RequiredEnv:
+    GITHUB_TOKEN
+    SONAR_TOKEN
+inputs:
+  npm_test_script_name:
+    description: npm test script name
+    required: false
+    default: test
+  nodejs-version:
+    description: >
+      The nodejs-version input is optional.
+      If not supplied, the action will try to resolve the
+      version from the default `.nodejs-version` file.
+      If the `.nodejs-version` file doesn't exist Nodejs
+      version from the PATH will be used.
+      The default version of Nodejs in PATH varies
+      between runners and can be changed unexpectedly
+      so we recommend always setting Nodejs version explicitly
+      using the nodejs-version or nodejs-version-file inputs.
+    required: false
+runs:
+  using: composite
+  steps:
+    - name: Find Python Packager
+      id: packager
+      shell: bash
+      run: |
+        echo "packager=yarn" >> $GITHUB_OUTPUT
+        if [ -f "yarn.lock" ]; then
+            echo "packager=yarn" >> $GITHUB_OUTPUT
+        fi
+        if [ -f "package-lock.json" ]; then
+            echo "packager=npm" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Set up Nodejs
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ inputs.nodejs-version }}
+        cache: ${{ steps.packager.outputs.packager }}
+
+    - name: Run pre_test.sh
+      shell: bash
+      run: |
+        pretest_cmd="echo 'NO_PRETEST'"
+        if [ -f ".github/actions/pre_test.sh" ]; then
+            pretest_cmd="$(cat .github/actions/pre_test.sh)"
+        fi
+        echo "pretest_cmd: $pretest_cmd"
+        sh -c "${pretest_cmd}"
+
+    - name: Install Application node_modules
+      shell: bash
+      run: |
+        echo "::group::Upgrade Packages"
+        if [ -f "yarn.lock" ]; then
+            yarn install
+        fi
+        if [ -f "package-lock.json" ]; then
+            npm ci
+        fi
+        echo "::endgroup::"
+
+    - name: Run Test
+      shell: bash
+      run: |
+        echo "::group::Test with yarn"
+        if [ -f "yarn.lock" ]; then
+            yarn run ${{ inputs.npm_test_script_name }}
+        fi
+        if [ -f "package-lock.json" ]; then
+           npm run ${{ inputs.npm_test_script_name }}
+        fi
+        echo "::endgroup::"
+
+    - name: Collect Coverage Results
+      shell: bash
+      run: |
+        echo "::group::Collect Coverage Results"
+        coverage xml -i -o coverage.xml
+        echo "::endgroup::"
+    - name: SonarCloud Scan
+      uses: sonarsource/sonarcloud-github-action@master
+      with:
+        args: >
+          -Dsonar.qualitygate.wait=${{ steps.sonar-setup.outputs.wait_flag }}
+          -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }}
+          -Dsonar.organization=${{ env.SONAR_ORG }}
+          -Dsonar.python.coverage.reportPaths=coverage.xml
