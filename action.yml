@@ -21,7 +21,7 @@ description: |
         uses: variant-inc/actions-nodejs@v2
         with:
           ecr_repository: 'demo/example'
-          nodejs-version: v20.1.0
+          nodejs-version: 18
   ```
 inputs:
   dockerfile_dir_path:
@@ -32,29 +32,20 @@ inputs:
     description: npm test script name
     required: false
     default: test
-  container_push_enabled:
-    description: Enable Build and Push Container Image
-    required: false
-    default: 'true'
   ecr_repository:
     description: Ecr repository name
     required: true
   aws_region:
-    description: >
-      Region where the image will be created.
+    description: Region where the image will be created.
     default: us-east-2
     required: false
   nodejs-version:
     description: >
       The nodejs-version input is optional.
-      If not supplied, the action will try to resolve the
-      version from the default `.nodejs-version` file.
-      If the `.nodejs-version` file doesn't exist Nodejs
-      version from the PATH will be used.
       The default version of Nodejs in PATH varies
       between runners and can be changed unexpectedly
       so we recommend always setting Nodejs version explicitly
-      using the nodejs-version or nodejs-version-file inputs.
+      using the nodejs-version input.
     required: false
 runs:
   using: composite

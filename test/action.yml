@@ -14,14 +14,10 @@ inputs:
   nodejs-version:
     description: >
       The nodejs-version input is optional.
-      If not supplied, the action will try to resolve the
-      version from the default `.nodejs-version` file.
-      If the `.nodejs-version` file doesn't exist Nodejs
-      version from the PATH will be used.
       The default version of Nodejs in PATH varies
       between runners and can be changed unexpectedly
       so we recommend always setting Nodejs version explicitly
-      using the nodejs-version or nodejs-version-file inputs.
+      using the nodejs-version input.
     required: false
 runs:
   using: composite
@@ -62,7 +58,7 @@ runs:
             yarn install
         fi
         if [ -f "package-lock.json" ]; then
-            npm ci
+            npm install
         fi
         echo "::endgroup::"
 
