@@ -27,9 +27,6 @@ runs:
       shell: bash
       run: |
         echo "packager=yarn" >> $GITHUB_OUTPUT
-        if [ -f "yarn.lock" ]; then
-            echo "packager=yarn" >> $GITHUB_OUTPUT
-        fi
         if [ -f "package-lock.json" ]; then
             echo "packager=npm" >> $GITHUB_OUTPUT
         fi
@@ -55,10 +52,11 @@ runs:
       run: |
         echo "::group::Upgrade Packages"
         if [ -f "yarn.lock" ]; then
-            yarn install
+            yarn install --frozen-lockfile
         fi
         if [ -f "package-lock.json" ]; then
             npm install
+            npm ci
         fi
         echo "::endgroup::"
 
