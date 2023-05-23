@@ -1,4 +1,5 @@
 ---
+# yamllint disable rule:line-length
 name: Test Nodejs
 description: |
   Github Action to Build & Test Nodejs

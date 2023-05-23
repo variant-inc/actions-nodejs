@@ -77,3 +77,8 @@ runs:
         dockerfile_dir_path: ${{ inputs.dockerfile_dir_path }}
         ecr_repository: ${{ inputs.ecr_repository }}
         aws_region: ${{ inputs.aws_region }}
+
+    - name: Set Language env
+      shell: bash
+      run: |
+        echo "LANGUAGE=nodejs" >> "$GITHUB_ENV"
