@@ -1,32 +1,84 @@
-name: "Lazy Action Nodejs"
-description: "Github action to perform build, test , scan and generate image."
+---
+# yamllint disable rule:line-length
+name: Lazy Action Nodejs
+description: |
+  Github Action to perform build, test , scan and generate Image for Nodejs
+
+  ## Permissions
+
+  Add the following permissions to the job
+
+  ```yaml
+  permissions:
+    id-token: write
+    contents: read
+  ```
+
+  ## Usage
+
+  ```yaml
+      - name: Actions Nodejs
+        uses: variant-inc/actions-nodejs@v2
+        with:
+          ecr_repository: 'demo/example'
+          nodejs-version: 18
+  ```
 inputs:
   dockerfile_dir_path:
-    description: "Directory path to the dockerfile"
+    description: Directory path to the dockerfile
     required: false
+    default: .
   npm_test_script_name:
-    description: "npm test script name"
+    description: npm test script name
     required: false
-    default: "test"
-  github_token:
-    description: "Github token"
-    required: true
-  container_push_enabled:
-    description: "Enable Build and Push Container Image"
-    required: false
-    default: "true"
+    default: test
   ecr_repository:
-    description: "Ecr repository name"
+    description: Ecr repository name
     required: false
-  sonar_project_key:
-    description: "When using a monorepo, you may need to specify the project key"
+  aws_region:
+    description: Region where the image will be created.
+    default: us-east-2
     required: false
-  sonar_project_base_dir:
-    description: "When using a monorepo, you may need to specify the base directory for your project"
+  nodejs-version:
+    description: >
+      The nodejs-version input is optional.
+      The default version of Nodejs in PATH varies
+      between runners and can be changed unexpectedly
+      so we recommend always setting Nodejs version explicitly
+      using the nodejs-version input.
     required: false
-    default: "."
 runs:
-  using: "docker"
-  image: "docker://public.ecr.aws/p4v7w0a5/lazy/nodejs-action:v1.5.1"
-  env:
-    GITHUB_TOKEN: ${{ inputs.github_token }}
+  using: composite
+  steps:
+    - name: Setup Actions
+      uses: variant-inc/actions-setup@v2
+
+    - name: Sonar Setup
+      id: sonar-setup
+      uses: variant-inc/actions-collection/sonar-setup@v2
+
+    - name: Relocate Test Action
+      shell: bash
+      run: |
+        mkdir -p ./.github/workflows/actions-nodejs/test
+        cp -R ${{ github.action_path }}/test/* ./.github/workflows/actions-nodejs/test/
+
+    - name: Build & Test Nodejs
+      uses: ./.github/workflows/actions-nodejs/test
+      if: ${{ steps.sonar-setup.outputs.sonar_skip != 'True' }}
+      with:
+        nodejs-version: ${{ inputs.nodejs-version }}
+        npm_test_script_name: ${{ inputs.npm_test_script_name }}
+
+    - name: Build and Push Image
+      uses: variant-inc/actions-collection/build-push-image@v2
+      if: ${{ inputs.ecr_repository != '' }}
+      with:
+        dockerfile_dir_path: ${{ inputs.dockerfile_dir_path }}
+        ecr_repository: ${{ inputs.ecr_repository }}
+        aws_region: ${{ inputs.aws_region }}
+
+    - name: Set Language env
+      shell: bash
+      run: |
+        echo "LANGUAGE=nodejs" >> "$GITHUB_ENV"
