@@ -17,8 +17,9 @@ RequiredEnv:
 
 | parameter | description | required | default |
 | --- | --- | --- | --- |
-| npm_test_script_name | npm test script name | `false` | test |
 | nodejs-version | The nodejs-version input is optional. The default version of Nodejs in PATH varies between runners and can be changed unexpectedly so we recommend always setting Nodejs version explicitly using the nodejs-version input.  | `false` |  |
+| npm_package_publish | Enabled npm Package Publish to AzureDevops. | `false` | false |
+| npm_test_script_name | npm test script name | `false` | test |
 <!-- action-docs-inputs -->
 
 <!-- action-docs-outputs -->

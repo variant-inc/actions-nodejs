@@ -11,7 +11,7 @@ description: |
   ```yaml
   permissions:
     id-token: write
-    contents: read
+    contents: write
   ```
 
   ## Usage
@@ -24,20 +24,16 @@ description: |
           nodejs-version: 18
   ```
 inputs:
+  aws_region:
+    description: Region where the image will be created.
+    default: us-east-2
+    required: false
   dockerfile_dir_path:
     description: Directory path to the dockerfile
     required: false
     default: .
-  npm_test_script_name:
-    description: npm test script name
-    required: false
-    default: test
   ecr_repository:
     description: Ecr repository name
-    required: false
-  aws_region:
-    description: Region where the image will be created.
-    default: us-east-2
     required: false
   nodejs-version:
     description: >
@@ -47,6 +43,14 @@ inputs:
       so we recommend always setting Nodejs version explicitly
       using the nodejs-version input.
     required: false
+  npm_package_publish:
+    description: Enabled npm Package Publish to AzureDevops.
+    required: false
+    default: 'false'
+  npm_test_script_name:
+    description: npm test script name
+    required: false
+    default: test
 runs:
   using: composite
   steps:
@@ -68,6 +72,7 @@ runs:
       if: ${{ steps.sonar-setup.outputs.sonar_skip != 'True' }}
       with:
         nodejs-version: ${{ inputs.nodejs-version }}
+        npm_package_publish: ${{ inputs.npm_package_publish }}
         npm_test_script_name: ${{ inputs.npm_test_script_name }}
 
     - name: Build and Push Image

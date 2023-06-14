@@ -8,10 +8,6 @@ description: |
     GITHUB_TOKEN
     SONAR_TOKEN
 inputs:
-  npm_test_script_name:
-    description: npm test script name
-    required: false
-    default: test
   nodejs-version:
     description: >
       The nodejs-version input is optional.
@@ -20,6 +16,14 @@ inputs:
       so we recommend always setting Nodejs version explicitly
       using the nodejs-version input.
     required: false
+  npm_package_publish:
+    description: Enabled npm Package Publish to AzureDevops.
+    required: false
+    default: 'false'
+  npm_test_script_name:
+    description: npm test script name
+    required: false
+    default: test
 runs:
   using: composite
   steps:
@@ -37,6 +41,7 @@ runs:
       with:
         node-version: ${{ inputs.nodejs-version }}
         cache: ${{ steps.packager.outputs.packager }}
+        registry-url:
 
     - name: Run pre_test.sh
       shell: bash
@@ -81,3 +86,8 @@ runs:
           -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }}
           -Dsonar.organization=${{ env.SONAR_ORG }}
           -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+
+    - name: AzureDevops npm Publish
+      if: ${{ inputs.npm_package_publish == 'true' }}
+      shell: bash
+      run: npm publish
