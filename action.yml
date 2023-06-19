@@ -29,7 +29,9 @@ inputs:
     required: false
     default: .
   npm_test_script_name:
-    description: npm test script name
+    description: >
+      This is the script path for tests in package.json.
+      This script should run tests with coverage and create a coverage/lcov.info.
     required: false
     default: test
   ecr_repository:
