@@ -42,8 +42,6 @@ runs:
       with:
         node-version: ${{ inputs.nodejs-version }}
         cache: ${{ steps.packager.outputs.packager }}
-        registry-url: https://pkgs.dev.azure.com/USXpress-Inc/CloudOps/_packaging/packages/npm/registry/
-        always-auth: true
 
     - name: Run pre_test.sh
       shell: bash
@@ -90,24 +88,25 @@ runs:
           -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
 
     - name: update ~/.npmrc
-      shell: bash
-      run: |
-        AZ_DEVOPS_ENCODED_PAT=$(echo -n "$AZ_DEV_PAT" | base64)
-        REGISTRY=//pkgs.dev.azure.com/USXpress-Inc/CloudOps/_packaging/packages/npm
-        echo """
-        ; begin auth token
-        $REGISTRY/registry/:username=USXpress-Inc
-        $REGISTRY/registry/:_password=$AZ_DEVOPS_ENCODED_PAT
-        $REGISTRY/registry/:email=dev@usxpress.com
-        $REGISTRY/:username=USXpress-Inc
-        $REGISTRY/:_password=$AZ_DEVOPS_ENCODED_PAT
-        $REGISTRY/:email=dev@usxpress.com
-        ; end auth token
-        """ > ~/.npmrc
-
-    - name: AzureDevops npm Publish
       if: ${{ inputs.npm_package_publish == 'true' }}
       shell: bash
       run: |
+        AZ_DEVOPS_ENCODED_PAT=$(echo -n "${{ env.AZ_DEVOPS_PAT }}" | base64)
+        REGISTRY=//pkgs.dev.azure.com/USXpress-Inc/CloudOps/_packaging/packages/npm
+        echo """
+        registry=https:$REGISTRY/registry/
+        always-auth=true
+        ; begin auth token
+        $REGISTRY/registry/:username=USXpress-Inc
+        $REGISTRY/registry/:_password=$AZ_DEVOPS_ENCODED_PAT
+        $REGISTRY/registry/:email=devops@usxpress.com
+        $REGISTRY/:username=USXpress-Inc
+        $REGISTRY/:_password=$AZ_DEVOPS_ENCODED_PAT
+        $REGISTRY/:email=devops@usxpress.com
+        ; end auth token
+        """ >> .npmrc
+        npm install
         npm publish
-        rm -f ~/.npmrc
+        rm -f .npmrc
+        echo "## npm Package Created" >> $GITHUB_STEP_SUMMARY
+        echo "${{ env.IMAGE_VERSION }}" >> $GITHUB_STEP_SUMMARY
