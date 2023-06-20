@@ -5,6 +5,7 @@ description: |
   Github Action to Build & Test Nodejs
 
   RequiredEnv:
+    AZ_DEV_PAT
     GITHUB_TOKEN
     SONAR_TOKEN
 inputs:
@@ -41,7 +42,8 @@ runs:
       with:
         node-version: ${{ inputs.nodejs-version }}
         cache: ${{ steps.packager.outputs.packager }}
-        registry-url:
+        registry-url: https://pkgs.dev.azure.com/USXpress-Inc/CloudOps/_packaging/packages/npm/registry/
+        always-auth: true 
 
     - name: Run pre_test.sh
       shell: bash
@@ -87,7 +89,25 @@ runs:
           -Dsonar.organization=${{ env.SONAR_ORG }}
           -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
 
+    - name: update ~/.npmrc
+      shell: bash
+      run: |
+        AZ_DEVOPS_ENCODED_PAT=$(echo -n "$AZ_DEV_PAT" | base64)
+        REGISTRY=//pkgs.dev.azure.com/USXpress-Inc/CloudOps/_packaging/packages/npm
+        echo """
+        ; begin auth token
+        $REGISTRY/registry/:username=USXpress-Inc
+        $REGISTRY/registry/:_password=$AZ_DEVOPS_ENCODED_PAT
+        $REGISTRY/registry/:email=dev@usxpress.com
+        $REGISTRY/:username=USXpress-Inc
+        $REGISTRY/:_password=$AZ_DEVOPS_ENCODED_PAT
+        $REGISTRY/:email=dev@usxpress.com
+        ; end auth token
+        """ > ~/.npmrc
+
     - name: AzureDevops npm Publish
       if: ${{ inputs.npm_package_publish == 'true' }}
       shell: bash
-      run: npm publish
+      run: |
+        npm publish
+        rm -f ~/.npmrc
