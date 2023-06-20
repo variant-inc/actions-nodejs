@@ -43,8 +43,6 @@ permissions:
 
 <!-- action-docs-outputs -->
 
-<!-- action-docs-outputs -->
-
 <!-- action-docs-runs -->
 ## Runs
 
