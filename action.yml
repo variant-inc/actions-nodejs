@@ -101,6 +101,7 @@ runs:
         ; end auth token
         """ >> .npmrc
         npm install
+        npm version ${{ env.IMAGE_VERSION }}
         npm publish
         rm -f .npmrc
         echo "## npm Package Created" >> $GITHUB_STEP_SUMMARY
