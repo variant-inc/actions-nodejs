@@ -5,7 +5,7 @@ description: |
   Github Action to Build & Test Nodejs
 
   RequiredEnv:
-    AZ_DEV_PAT
+    AZ_DEVOP_PAT
     GITHUB_TOKEN
     SONAR_TOKEN
 inputs:

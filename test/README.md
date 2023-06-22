@@ -8,7 +8,7 @@ Action for CI workflow for nodejs applications
 Github Action to Build & Test Nodejs
 
 RequiredEnv:
-  AZ_DEV_PAT
+  AZ_DEVOP_PAT
   GITHUB_TOKEN
   SONAR_TOKEN
 <!-- action-docs-description -->
