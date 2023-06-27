@@ -87,6 +87,10 @@ runs:
       shell: bash
       run: ./.github/workflows/actions-nodejs/test/npm_package_publish.sh
 
+    - name: Create Release Action
+      uses: variant-inc/actions-collection/create-release-tag@v2
+      if: ${{ inputs.nuget_push_enabled == 'true' && inputs.ecr_repository == '' }}
+
     - name: Set Language env
       shell: bash
       run: |
