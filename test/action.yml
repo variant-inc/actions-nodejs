@@ -5,13 +5,10 @@ description: |
   Github Action to Build & Test Nodejs
 
   RequiredEnv:
+    AZ_DEVOP_PAT
     GITHUB_TOKEN
     SONAR_TOKEN
 inputs:
-  npm_test_script_name:
-    description: npm test script name
-    required: false
-    default: test
   nodejs-version:
     description: >
       The nodejs-version input is optional.
@@ -20,6 +17,14 @@ inputs:
       so we recommend always setting Nodejs version explicitly
       using the nodejs-version input.
     required: false
+  npm_package_publish:
+    description: Enabled npm Package Publish to AzureDevops.
+    required: false
+    default: 'false'
+  npm_test_script_name:
+    description: npm test script name
+    required: false
+    default: test
 runs:
   using: composite
   steps:

@@ -11,7 +11,7 @@ description: |
   ```yaml
   permissions:
     id-token: write
-    contents: read
+    contents: write
   ```
 
   ## Usage
@@ -24,22 +24,16 @@ description: |
           nodejs-version: 18
   ```
 inputs:
+  cloud_region:
+    description: Region where the image will be created.
+    default: us-east-2
+    required: false
   dockerfile_dir_path:
     description: Directory path to the dockerfile
     required: false
     default: .
-  npm_test_script_name:
-    description: >
-      This is the script path for tests in package.json.
-      This script should run tests with coverage and create a coverage/lcov.info.
-    required: false
-    default: test
   ecr_repository:
     description: Ecr repository name
-    required: false
-  aws_region:
-    description: Region where the image will be created.
-    default: us-east-2
     required: false
   nodejs-version:
     description: >
@@ -49,6 +43,14 @@ inputs:
       so we recommend always setting Nodejs version explicitly
       using the nodejs-version input.
     required: false
+  npm_package_publish:
+    description: Enabled npm Package Publish to AzureDevops.
+    required: false
+    default: 'false'
+  npm_test_script_name:
+    description: npm test script name
+    required: false
+    default: test
 runs:
   using: composite
   steps:
@@ -59,11 +61,13 @@ runs:
       id: sonar-setup
       uses: variant-inc/actions-collection/sonar-setup@v2
 
-    - name: Relocate Test Action
+    - name: Relocate Test Actions
       shell: bash
       run: |
         mkdir -p ./.github/workflows/actions-nodejs/test
         cp -R ${{ github.action_path }}/test/* ./.github/workflows/actions-nodejs/test/
+        mkdir -p ./.github/workflows/actions-nodejs/publish
+        cp -R ${{ github.action_path }}/publish/* ./.github/workflows/actions-nodejs/publish/
 
     - name: Build & Test Nodejs
       uses: ./.github/workflows/actions-nodejs/test
@@ -78,7 +82,16 @@ runs:
       with:
         dockerfile_dir_path: ${{ inputs.dockerfile_dir_path }}
         ecr_repository: ${{ inputs.ecr_repository }}
-        aws_region: ${{ inputs.aws_region }}
+        aws_region: ${{ inputs.cloud_region }}
+
+    - name: Azure Devops npm Publish
+      if: ${{ inputs.npm_package_publish == 'true' }}
+      shell: bash
+      run: ./.github/workflows/actions-nodejs/publish/npm_package_publish.sh
+
+    - name: Create Release Action
+      uses: variant-inc/actions-collection/create-release-tag@v2
+      if: ${{ inputs.nuget_push_enabled == 'true' && inputs.ecr_repository == '' }}
 
     - name: Set Language env
       shell: bash
