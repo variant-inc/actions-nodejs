@@ -33,7 +33,7 @@ permissions:
 
 | parameter | description | required | default |
 | --- | --- | --- | --- |
-| aws_region | Region where the image will be created. | `false` | us-east-2 |
+| cloud_region | Region where the image will be created. | `false` | us-east-2 |
 | dockerfile_dir_path | Directory path to the dockerfile | `false` | . |
 | ecr_repository | Ecr repository name | `false` |  |
 | nodejs-version | The nodejs-version input is optional. The default version of Nodejs in PATH varies between runners and can be changed unexpectedly so we recommend always setting Nodejs version explicitly using the nodejs-version input.  | `false` |  |

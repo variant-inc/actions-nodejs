@@ -24,7 +24,7 @@ description: |
           nodejs-version: 18
   ```
 inputs:
-  aws_region:
+  cloud_region:
     description: Region where the image will be created.
     default: us-east-2
     required: false
@@ -80,7 +80,7 @@ runs:
       with:
         dockerfile_dir_path: ${{ inputs.dockerfile_dir_path }}
         ecr_repository: ${{ inputs.ecr_repository }}
-        aws_region: ${{ inputs.aws_region }}
+        aws_region: ${{ inputs.cloud_region }}
 
     - name: Azure Devops npm Publish
       if: ${{ inputs.npm_package_publish == 'true' }}
