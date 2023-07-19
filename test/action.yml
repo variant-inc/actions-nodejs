@@ -25,6 +25,9 @@ inputs:
     description: npm test script name
     required: false
     default: test
+  sonar_wait_flag:
+    description: Says if Sonar has to wait for analysis
+    required: false
 runs:
   using: composite
   steps:
@@ -82,7 +85,7 @@ runs:
       uses: sonarsource/sonarcloud-github-action@master
       with:
         args: >
-          -Dsonar.qualitygate.wait=${{ steps.sonar-setup.outputs.wait_flag }}
+          -Dsonar.qualitygate.wait=${{ inputs.sonar_wait_flag }}
           -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }}
           -Dsonar.organization=${{ env.SONAR_ORG }}
           -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info

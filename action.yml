@@ -75,6 +75,7 @@ runs:
       with:
         nodejs-version: ${{ inputs.nodejs-version }}
         npm_test_script_name: ${{ inputs.npm_test_script_name }}
+        sonar_wait_flag: ${{ steps.sonar-setup.outputs.wait_flag }}
 
     - name: Build and Push Image
       uses: variant-inc/actions-collection/build-push-image@v2
