@@ -77,6 +77,10 @@ runs:
         npm_test_script_name: ${{ inputs.npm_test_script_name }}
         sonar_wait_flag: ${{ steps.sonar-setup.outputs.wait_flag }}
 
+    - name: Sonar Coverage Check
+      id: sonar-coverage-check
+      uses: variant-inc/actions-collection/sonar-coverage-check@b/cloud-2321-fix-zero-coverage
+
     - name: Build and Push Image
       uses: variant-inc/actions-collection/build-push-image@v2
       if: ${{ inputs.ecr_repository != '' }}
