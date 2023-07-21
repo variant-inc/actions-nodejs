@@ -80,6 +80,7 @@ runs:
     - name: Sonar Coverage Check
       id: sonar-coverage-check
       uses: variant-inc/actions-collection/sonar-coverage-check@v2
+      if: ${{ steps.sonar-setup.outputs.wait_flag == 'true' }}
 
     - name: Build and Push Image
       uses: variant-inc/actions-collection/build-push-image@v2
