@@ -91,13 +91,13 @@ runs:
         aws_region: ${{ inputs.cloud_region }}
 
     - name: Azure Devops npm Publish
-      if: ${{ inputs.npm_package_publish == 'true' }}
+      if: ${{ inputs.npm_package_push == 'true' }}
       shell: bash
       run: ./.github/workflows/actions-nodejs/publish/npm_package_publish.sh
 
     - name: Create Release Action
       uses: variant-inc/actions-collection/create-release-tag@v2
-      if: ${{ inputs.nuget_push_enabled == 'true' && inputs.ecr_repository == '' }}
+      if: ${{ inputs.npm_package_push == 'true' && inputs.ecr_repository == '' }}
 
     - name: Set Language env
       shell: bash
