@@ -45,6 +45,7 @@ permissions:
 
 To use a package from Azure DevOps that was published by this action,
 create .npmrc with the following information and add it to the root directory
+of your repository.
 
 ```yaml
 registry=https://pkgs.dev.azure.com/USXpress-Inc/CloudOps/_packaging/packages/npm/registry/

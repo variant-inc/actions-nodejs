@@ -15,22 +15,13 @@ $REGISTRY/:username=USXpress-Inc
 $REGISTRY/:_password=${AZ_DEVOPS_BASE64_PAT}
 $REGISTRY/:email=devops@usxpress.com
 ; end auth token
-""" >> .npmrc
-npm version "$IMAGE_VERSION" --no-git-tag-version
-versions=$(npm view --json | jq '.versions[]')
-found=false
+""" >>.npmrc
 
-for version in $versions; do
-    if [[ $version = "$IMAGE_VERSION" ]]; then
-        echo "$IMAGE_VERSION"
-        found=true
-    fi
-done
-
-if [ "$found" = true ]; then
-    echo "$IMAGE_VERSION already exists" >> "$GITHUB_STEP_SUMMARY"
+if [[ -n $(npm view --json | jq -r '.versions[] | select(.=="'"$IMAGE_VERSION"'")') ]]; then
+    echo "$IMAGE_VERSION already exists" >>"$GITHUB_STEP_SUMMARY"
 else
+    npm version "$IMAGE_VERSION" --no-git-tag-version
     npm publish
-    echo "## npm Package Created" >> "$GITHUB_STEP_SUMMARY"
-    echo "$IMAGE_VERSION" >> "$GITHUB_STEP_SUMMARY"
+    echo "## npm Package Created" >>"$GITHUB_STEP_SUMMARY"
+    echo "$IMAGE_VERSION" >>"$GITHUB_STEP_SUMMARY"
 fi
