@@ -20,7 +20,7 @@ repos:
     hooks:
       - id: beautysh
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.34.0
+    rev: v0.37.0
     hooks:
       - id: markdownlint
   - repo: https://github.com/jumanjihouse/pre-commit-hook-yamlfmt
@@ -29,7 +29,7 @@ repos:
       - id: yamlfmt
         args: [--mapping, '2', --sequence, '4', --offset, '2']
   - repo: https://github.com/adrienverge/yamllint
-    rev: v1.31.0
+    rev: v1.32.0
     hooks:
       - id: yamllint
         args: [--format, parsable, --strict]
