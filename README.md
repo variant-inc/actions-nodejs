@@ -59,6 +59,22 @@ always-auth=true
 //pkgs.dev.azure.com/USXpress-Inc/CloudOps/_packaging/packages/npm/:email=devops@usxpress.com
 ; end auth token
 ```
+
+## Locating packages
+
+Azure artifacts of NPM packages are located here.
+
+```text
+https://dev.azure.com/USXpress-Inc/CloudOps/_artifacts/feed/packages
+```
+
+## Locating Container Images
+
+ECR containers can be located with this URI.
+
+```text
+064859874041.dkr.ecr.us-east-2.amazonaws.com/<ecr_repository>
+```
 <!-- action-docs-description -->
 
 <!-- action-docs-inputs -->
