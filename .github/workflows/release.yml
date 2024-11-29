@@ -14,16 +14,6 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Install GitVersion
-        uses: gittools/actions/gitversion/setup@v2
-        with:
-          versionSpec: 5.x
-      - name: Determine Version
-        uses: gittools/actions/gitversion/execute@v2
-        with:
-          useConfigFile: true
+      - uses: variant-inc/actions-setup@v2
       - name: Create Release Action
         uses: variant-inc/actions-collection/create-release-tag@v2
