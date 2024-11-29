@@ -1,27 +1,27 @@
 ---
 # yamllint disable rule:line-length
-assembly-file-versioning-format: '{NuGetVersionV2}.{env:GITHUB_RUN_NUMBER ?? 9999}'
-assembly-versioning-format: '{NuGetVersionV2}.{env:GITHUB_RUN_NUMBER ?? 9999}'
+assembly-file-versioning-format: '{SemVer}.{env:GITHUB_RUN_NUMBER ?? 9999}'
+assembly-versioning-format: '{SemVer}.{env:GITHUB_RUN_NUMBER ?? 9999}'
 
 mode: ContinuousDeployment
-continuous-delivery-fallback-tag: ''
 branches:
   main:
     mode: ContinuousDeployment
     increment: Patch
-    prevent-increment-of-merged-branch-version: true
     regex: ^master$|^main$
-    tag: ''
+    label: ''
+    prevent-increment:
+      of-merged-branch: true
     source-branches:
       - feature
     is-release-branch: true
-    is-mainline: true
+    is-main-branch: true
     pre-release-weight: 55000
   feature:
     mode: ContinuousDeployment
-    tag: useBranchName
     increment: Minor
     regex: ^(?!master|main).*$
+    label: useBranchName
     source-branches:
       - main
     tracks-release-branches: true
