@@ -18,10 +18,10 @@ $REGISTRY/:email=devops@usxpress.com
 """ >>.npmrc
 
 if [[ -n $(npm view --json | jq -r '.versions[] | select(.=="'"$IMAGE_VERSION"'")') ]]; then
-    echo "$IMAGE_VERSION already exists" >>"$GITHUB_STEP_SUMMARY"
+	echo "$IMAGE_VERSION already exists" >>"$GITHUB_STEP_SUMMARY"
 else
-    npm version "$IMAGE_VERSION" --no-git-tag-version
-    npm publish
-    echo "## npm Package Created" >>"$GITHUB_STEP_SUMMARY"
-    echo "$IMAGE_VERSION" >>"$GITHUB_STEP_SUMMARY"
+	npm version "$IMAGE_VERSION" --no-git-tag-version
+	npm publish
+	echo "## npm Package Created" >>"$GITHUB_STEP_SUMMARY"
+	echo "$IMAGE_VERSION" >>"$GITHUB_STEP_SUMMARY"
 fi
