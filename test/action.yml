@@ -41,7 +41,7 @@ runs:
         fi
 
     - name: Set up Nodejs
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v5
       with:
         node-version: ${{ inputs.nodejs-version }}
         cache: ${{ steps.packager.outputs.packager }}
