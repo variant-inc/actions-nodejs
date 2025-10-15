@@ -73,13 +73,15 @@ runs:
       shell: bash
       run: |
         echo "::group::Run Test"
+        args=""
         if [ -f "yarn.lock" ]; then
-            yarn run ${{ inputs.npm_test_script_name }}
+            args='yarn run ${{ inputs.npm_test_script_name }}'
         fi
         if [ -f "package-lock.json" ]; then
-           npm run ${{ inputs.npm_test_script_name }}
+           args='npm run ${{ inputs.npm_test_script_name }}'
         fi
         echo "::endgroup::"
+        eval "npx c8 --reporter=html --reporter=text --reporter=json-summary --all $args"
 
     - name: SonarCloud Scan
       uses: sonarsource/sonarcloud-github-action@master
@@ -90,3 +92,24 @@ runs:
           -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }}
           -Dsonar.organization=${{ env.SONAR_ORG }}
           -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+
+    - name: Generate coverage summary
+      shell: bash
+      if: env.ENABLE_SONAR != 'true'
+      run: |
+        echo "## 📊 Test Results Summary" >> $GITHUB_STEP_SUMMARY
+        echo "" >> coverage-summary.md
+        echo '```' >> coverage-summary.md
+        npx c8 report --reporter=text >> coverage-summary.md
+        echo '```' >> coverage-summary.md
+
+        cat coverage-summary.md >> $GITHUB_STEP_SUMMARY
+
+    - name: Upload coverage artifacts
+      uses: actions/upload-artifact@v4
+      if: env.ENABLE_SONAR != 'true'
+      with:
+        name: coverage-reports
+        path: |
+          coverage/
+          coverage-summary.md
