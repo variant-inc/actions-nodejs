@@ -83,6 +83,7 @@ runs:
 
     - name: SonarCloud Scan
       uses: sonarsource/sonarcloud-github-action@master
+      if: env.ENABLE_SONAR == 'true'
       with:
         args: >
           -Dsonar.qualitygate.wait=${{ inputs.sonar_wait_flag }}
