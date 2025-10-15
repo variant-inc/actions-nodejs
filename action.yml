@@ -112,6 +112,7 @@ runs:
     - name: Sonar Setup
       id: sonar-setup
       uses: variant-inc/actions-collection/sonar-setup@v2
+      if: env.ENABLE_SONAR == 'true'
 
     - name: Relocate Test Actions
       shell: bash
@@ -132,7 +133,7 @@ runs:
     - name: Sonar Coverage Check
       id: sonar-coverage-check
       uses: variant-inc/actions-collection/sonar-coverage-check@v2
-      if: ${{ steps.sonar-setup.outputs.wait_flag == 'true' }}
+      if: ${{ steps.sonar-setup.outputs.wait_flag == 'true' && env.ENABLE_SONAR == 'true' }}
 
     - name: Build and Push Image
       uses: variant-inc/actions-collection/build-push-image@v2
