@@ -18,10 +18,10 @@ RequiredEnv:
 
 | parameter | description | required | default |
 | --- | --- | --- | --- |
-| nodejs-version | The nodejs-version input is optional. The default version of Nodejs in PATH varies between runners and can be changed unexpectedly so we recommend always setting Nodejs version explicitly using the nodejs-version input.  | `false` |  |
+| nodejs-version | The nodejs-version input is optional. The default version of Nodejs in PATH varies between runners and can be changed unexpectedly so we recommend always setting Nodejs version explicitly using the nodejs-version input. | `false` | |
 | npm_package_publish | Enabled npm Package Publish to AzureDevops. | `false` | false |
 | npm_test_script_name | npm test script name | `false` | test |
-| sonar_wait_flag | Says if Sonar has to wait for analysis | `false` |  |
+| sonar_wait_flag | Says if Sonar has to wait for analysis | `false` | |
 <!-- action-docs-inputs -->
 
 <!-- action-docs-outputs -->
