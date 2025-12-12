@@ -106,7 +106,7 @@ runs:
         cat coverage-summary.md >> $GITHUB_STEP_SUMMARY
 
     - name: Upload coverage artifacts
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       if: env.ENABLE_SONAR != 'true'
       with:
         name: coverage-reports
